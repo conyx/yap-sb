@@ -1,0 +1,11 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+*.stl
+
+# libraries
+/BOSL2
+
+# System Files
+.DS_Store
+Thumbs.db
