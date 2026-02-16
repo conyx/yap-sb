@@ -44,12 +44,24 @@ module summary() {
                str("Length: ", hinge_length, "mm")])
     : [];
 
+  // Column 4: Printing pause (magnet closure)
+  box_pause_end = box_height_outside - magnet_glue_hole_height;
+  box_pause_start = box_pause_end - 2*magnet_looseness_offset;
+  lid_pause_end = lid_height_outside - lp_height - magnet_glue_hole_height;
+  lid_pause_start = lid_pause_end - 2*magnet_looseness_offset;
+  col4 = (generate_magnets && magnet_generate_closure)
+    ? ["Pause printing to insert magnets:",
+       str("Box pause at Z: <", box_pause_start, " - ", box_pause_end, ">mm"),
+       str("Lid pause at Z: <", lid_pause_start, " - ", lid_pause_end, ">mm"),
+       str("Pause as high as possible!")]
+    : [];
+
   // Echo summary
-  all_lines = concat(col1, col2, col3);
+  all_lines = concat(col1, col2, col3, col4);
   for (i = [0:max(0, len(all_lines) - 1)]) echo(all_lines[i]);
 
   // Summary plate
-  if (generate_summary_plate) {
+  if (generate_summary_plate && $preview) {
     padding = x_width_outside / 40;
     text_plate_width = max(
       (generate_lid
@@ -68,11 +80,12 @@ module summary() {
 
     // Columns X positions
     col1_x = text_x;
-    col2_x = col1_x + font_size * 22;
-    col3_x = col2_x + ((len(col2) > 0) ? font_size * 15 : 0);
+    col2_x = col1_x + font_size * 21;
+    col3_x = col2_x + ((len(col2) > 0) ? font_size * 14 : 0);
+    col4_x = col3_x + ((len(col3) > 0) ? font_size * 23 : 0);
 
     // Render columns [lines, x_position]
-    columns = [[col1, col1_x], [col2, col2_x], [col3, col3_x]];
+    columns = [[col1, col1_x], [col2, col2_x], [col3, col3_x], [col4, col4_x]];
 
     for (c = [0:len(columns) - 1])
       if (len(columns[c][0]) > 0)

@@ -18,8 +18,12 @@ module magnet_holder(height, wall_distance, wall_rounding, clearance) {
                rounding = holder_rounding);
 
       if (!clearance) {
+        effective_hole_height = magnet_generate_closure
+          ? magnet_hole_height - magnet_glue_hole_height
+          : magnet_hole_height;
         up(holder_height - magnet_hole_height)
-        cylinder(d=magnet_hole_diameter, h=magnet_hole_height + SHIMMERING_WALL_OFFSET);
+          cylinder(d=magnet_hole_diameter,
+                   h=effective_hole_height + (magnet_generate_closure ? 0 : SHIMMERING_WALL_OFFSET));
       }
     }
 }

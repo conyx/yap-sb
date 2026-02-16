@@ -19,7 +19,7 @@ lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip
 // Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results.
 resolution = 70;
 
-// Generate summary plate with dimensions and accessories info
+// Generate summary plate with dimensions and accessories info (only in preview mode).
 generate_summary_plate = true;
 
 // Compartments dimensions as a flat vector. Format: depth, width, width, ..., 0, depth, width, ... Zeros separate rows. First number of each row is its Y depth, followed by X widths of compartments in that row. (TIP: Use "[100, 100]" for a single full-box compartment.)
@@ -83,6 +83,9 @@ magnet_looseness_offset = 0.15; // .05
 
 // Z (height) dimension offset for (hot melt) glue to secure magnets in the holes
 magnet_glue_hole_height = 1; // .5
+
+// True if magnet closure should be generated. Magnet closure will fill the space determined for the glue above the magnet. IMPORTANT: You have to pause printing at specific layer to insert magnets. See console output or generate summary plate for instructions.
+magnet_generate_closure = false;
 
 /* [Hinges] */
 
