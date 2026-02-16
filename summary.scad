@@ -29,12 +29,12 @@ module summary() {
         ["Hinges:"],
         hinge_join_type == "screw_nut"
           ? [str("Screws and nuts count: ", hinges_number),
-             str("Screw diameter: ", hinge_screw_diameter, "mm"),
              str("Screw length (w/o head): ", hinge_screw_length, "mm"),
+             str("Screw diameter: ", hinge_screw_diameter, "mm"),
+             str("Screw head width: ", hinge_screw_head_width, "mm"),
              str("Screw head diameter: ", hinge_screw_head_diameter, "mm"),
-             str("Screw head height: ", hinge_screw_head_height, "mm"),
-             str("Nut size: ", hinge_screw_nut_size, "mm"),
-             str("Nut height: ", hinge_screw_nut_height, "mm")]
+             str("Nut width: ", hinge_nut_width, "mm"),
+             str("Nut size: ", hinge_nut_size, "mm")]
           : hinge_join_type == "screw_self_tap"
             ? [str("Self-tapping screws needed: ", hinges_number),
                str("Screw type (diameter): ", hinge_self_tap_screw_type),

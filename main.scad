@@ -79,7 +79,7 @@ magnet_height = 3;  // .5
 magnet_holder_diameter = 6;  // .5
 
 // Magnet holes outer dimension offset. The larger the number the looser the friction fit.
-magnet_looseness_offset = 0.1; // .05
+magnet_looseness_offset = 0.15; // .05
 
 // Z (height) dimension offset for (hot melt) glue to secure magnets in the holes
 magnet_glue_hole_height = 1; // .5
@@ -129,20 +129,20 @@ hinge_screw_length = 30;
 // Hinge screw diameter
 hinge_screw_diameter = 2.5;  // .05
 
-// Hinge screw loosenes offset for head and nut
-hinge_screw_looseness_offset = 0.1; // .05
+// Hinge screw head width
+hinge_screw_head_width = 1.8; // .1
 
 // Hinge screw head diameter
 hinge_screw_head_diameter = 4; // .1
 
-// Hinge screw head height
-hinge_screw_head_height = 2; // .1
+// Hinge screw nut width (the depth of the thread hole)
+hinge_nut_width = 1.8; // .1
 
 // Hinge screw nut size (in other word what spanner size will you use)
-hinge_screw_nut_size = 4; // .1
+hinge_nut_size = 4; // .1
 
-// Hinge screw nut height
-hinge_screw_nut_height = 2; // .1
+// Loosenes offset for head and nut
+hinge_screw_looseness_offset = 0.1; // .05
 
 /* [Hinges / self-tapping screw] */
 
@@ -213,7 +213,7 @@ hinge_knuckle_offset = hinge_knuckle_diameter / 2 + hinge_mount_gap;
 hinge_length = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_length + hinge_self_tap_screw_gap
   : hinge_join_type == "screw_nut"
-    ? hinge_screw_length + hinge_screw_head_height + 2*hinge_screw_looseness_offset
+    ? hinge_screw_length + hinge_screw_head_width + 4*hinge_screw_looseness_offset
     : hinge_pin_length;
 hinge_hole_diameter = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_type
