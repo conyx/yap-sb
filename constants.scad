@@ -5,7 +5,7 @@ TINY = 0.01;
 SHIMMERING_WALL_OFFSET = 1;
 
 // Minnimal inner corner radius
-MIN_INNER_CORNER_RADIUS = TINY;
+MIN_CORNER_RADIUS = TINY;
 
 // Colors
 BOX_COLOR = "#698269";

@@ -5,6 +5,7 @@ include <BOSL2/fnliterals.scad>
 include <utils.scad>
 include <constants.scad>
 include <compartments.scad>
+include <connection.scad>
 include <box.scad>
 include <lid.scad>
 include <magnets.scad>
@@ -17,7 +18,10 @@ include <summary.scad>
 lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets]
 
 // Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results.
-resolution = 70;
+resolution = 50;
+
+// Number of fragments in preview mode (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results in preview mode.
+resolution_preview = 25;
 
 // Generate summary plate with dimensions and accessories info (only in preview mode).
 generate_summary_plate = true;
@@ -32,7 +36,7 @@ bottom_height = 25; // .5
 lid_height = 10; // .5
 
 // Wall thickness. This adds to the outside dimensions of the box.
-thickness = 2; // .1
+thickness = 2.4; // .1
 
 /* [Separators] */
 
@@ -63,6 +67,17 @@ lip_thickness = 0.8; // .1
 
 // Lip outer dimension offset. The larger the number the looser the friction fit.
 lip_looseness_offset = 0.15; // .05
+
+/* [Connection groove / bump] */
+
+// Connection type on the top of box / lid wall: bump is the smaller protrusion, groove is the larger channel that receives it. Has no effect if 1) lid is NOT generated 2) lip is generated 3) bump or groove percentage is zero.
+connection_type = "bump_box"; // [off: Off, bump_box: Bump on box & groove on lid, bump_lid: Bump on lid & groove on box]
+
+// Groove diameter as percentage of wall thickness. Must be >= bump percentage.
+connection_groove_percentage = 80; // [0:1:100]
+
+// Bump diameter as percentage of wall thickness. Must be <= groove percentage.
+connection_bump_percentage = 70; // [0:1:100]
 
 /* [Magnets] */
 
@@ -174,7 +189,7 @@ lid_notches_spacing = 1.5; // .1
 
 /* [Hidden] */
 
-$fn = resolution;
+$fn = $preview ? resolution_preview : resolution;
 
 compartments_grid = parse_compartments_grid(compartments_dimensions);
 
@@ -183,6 +198,8 @@ generate_lid = lid_type != "no_lid";
 generate_lip = (lid_type == "lip" || lid_type == "lip_magnets");
 generate_magnets = (lid_type == "magnets" || lid_type == "lip_magnets" || lid_type == "hinges_magnets");
 generate_hinges = (lid_type == "hinges" || lid_type == "hinges_magnets");
+generate_connection = connection_type != "off" && generate_lid && !generate_lip &&
+                    connection_groove_percentage > 0 && connection_bump_percentage > 0;
 
 // Reset lip parameters if needed
 lp_height = generate_lip ? lip_height : 0;
@@ -207,9 +224,9 @@ bottom_height_outside = bottom_height + thickness;
 box_height_inside = bottom_height + lp_height;
 box_height_outside = bottom_height_outside + lp_height;
 lid_height_outside = lid_height + thickness;
-lip_rounding = max(MIN_INNER_CORNER_RADIUS,
+lip_rounding = max(MIN_CORNER_RADIUS,
                    corner_outer_radius - thickness - lp_looseness_offset);
-lid_cut_out_rounding = max(MIN_INNER_CORNER_RADIUS, corner_outer_radius - thickness);
+lid_cut_out_rounding = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness);
 
 // Hinges
 hinge_knuckle_offset = hinge_knuckle_diameter / 2 + hinge_mount_gap;
@@ -228,6 +245,11 @@ hinge_hole_diameter = hinge_join_type == "screw_self_tap"
 magnet_holder_radius = magnet_holder_diameter/2;
 magnet_hole_diameter = magnet_diameter + 2*magnet_looseness_offset;
 magnet_hole_height = magnet_height + magnet_glue_hole_height + 2*magnet_looseness_offset;
+
+// Connaction groove / bump
+connection_groove_diameter = connection_groove_percentage / 100 * thickness;
+connection_bump_diameter = connection_bump_percentage / 100 * thickness;
+connection_rounding = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness/2);
 
 // Lid notches
 lid_notch_radius = thickness / 2;

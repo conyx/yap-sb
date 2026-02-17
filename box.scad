@@ -27,17 +27,23 @@ module box() {
           compartments(
             height = box_height_outside,
             z_offset = thickness,
-            outer_rounding = max(MIN_INNER_CORNER_RADIUS,
+            outer_rounding = max(MIN_CORNER_RADIUS,
                                  corner_inner_radius,
                                  corner_outer_radius - thickness - lp_thickness - lp_looseness_offset),
-            inner_rounding = max(MIN_INNER_CORNER_RADIUS, corner_inner_radius),
+            inner_rounding = max(MIN_CORNER_RADIUS, corner_inner_radius),
             bottom_rounding = compartment_bottom_radius,
             edge_extension = 0
           );
         }
+
+      // Connection bump
+      connection_box("bump");
       }
 
       // Cut out magnet holders space
       magnet_holders_box(clearance = true);
+
+      // Cut out connection groove
+      connection_box("groove");
     }
 }

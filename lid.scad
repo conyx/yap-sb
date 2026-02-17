@@ -35,7 +35,7 @@ module lid() {
                 height = lid_height_outside,
                 z_offset = thickness - lid_height_outside/2,
                 outer_rounding = lid_cut_out_rounding,
-                inner_rounding = MIN_INNER_CORNER_RADIUS,
+                inner_rounding = MIN_CORNER_RADIUS,
                 bottom_rounding = 0,
                 edge_extension = lp_thickness + lp_looseness_offset,
                 mirror_x = true
@@ -54,8 +54,14 @@ module lid() {
             notches();
           }
         }
+
+        // Connection bump
+        connection_lid("bump");
       }
- 
+
+      // Cut out connection groove
+      connection_lid("groove");
+
       // Cut out magnet holders space
       magnet_holders_lid(clearance = true);
     }
