@@ -10,18 +10,28 @@ module magnet_holder(height, wall_distance, wall_rounding, clearance) {
         0,                   // X-Y- (LEFT+FRONT)
         magnet_holder_radius // X+Y- (RIGHT+FRONT)
       ];
-      holder_xy_offset = (wall_distance - magnet_holder_radius) / 2;
+      holder_rect_xy_offset = (wall_distance - magnet_holder_radius) / 2
+                              - magnet_holder_rounding_fix_offset;
+      holder_circle_xy_offset = magnet_holder_rounding_fix_offset;
 
-      move([-holder_xy_offset, holder_xy_offset, holder_height/2])
+      up(holder_height/2)
         linear_extrude(height = holder_height, center = true)
-          rect([holder_size, holder_size],
-               rounding = holder_rounding);
+          if (wall_rounding > holder_size) {
+            move([holder_circle_xy_offset, -holder_circle_xy_offset])
+              circle(r = magnet_holder_radius);
+          } else {
+            move([-holder_rect_xy_offset, holder_rect_xy_offset])
+              rect([holder_size, holder_size],
+                   rounding = holder_rounding);
+          }
 
       if (!clearance) {
         effective_hole_height = magnet_generate_closure
           ? magnet_hole_height - magnet_glue_hole_height
           : magnet_hole_height;
-        up(holder_height - magnet_hole_height)
+        move([magnet_holder_rounding_fix_offset,
+              -magnet_holder_rounding_fix_offset,
+              holder_height - magnet_hole_height])
           cylinder(d=magnet_hole_diameter,
                    h=effective_hole_height + (magnet_generate_closure ? 0 : SHIMMERING_WALL_OFFSET));
       }
@@ -31,7 +41,7 @@ module magnet_holder(height, wall_distance, wall_rounding, clearance) {
 // Box magnet holder
 module magnet_holder_box(clearance) {
   magnet_holder(height = box_height_outside,
-                wall_distance = magnet_holder_radius,
+                wall_distance = magnet_holder_radius + magnet_holder_rounding_fix_offset,
                 wall_rounding = lip_rounding,
                 clearance = clearance);
 }
@@ -69,7 +79,7 @@ module magnet_holders_box(clearance = false) {
 module magnet_holder_lid(clearance) {
   xflip()
     magnet_holder(height = lid_height_outside - lp_height,
-                  wall_distance = magnet_holder_radius + lp_looseness_offset,
+                  wall_distance = magnet_holder_radius + lp_looseness_offset + magnet_holder_rounding_fix_offset,
                   wall_rounding = lid_cut_out_rounding,
                   clearance = clearance);
 }

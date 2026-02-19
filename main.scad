@@ -85,19 +85,19 @@ connection_bump_percentage = 70; // [0:1:100]
 magnets_number = 2; // [2: 2 magnets, 4: 4 magnets]
 
 // Magnet diameter
-magnet_diameter = 3;  // .5
+magnet_diameter = 4;  // .5
 
 // Magnet height
-magnet_height = 3;  // .5
+magnet_height = 4;  // .5
 
 // Magnets holder diameter (must be more than magnet_diameter)
-magnet_holder_diameter = 6;  // .5
+magnet_holder_diameter = 5.5;  // .5
 
 // Magnet holes outer dimension offset. The larger the number the looser the friction fit.
 magnet_looseness_offset = 0.15; // .05
 
 // Z (height) dimension offset for (hot melt) glue to secure magnets in the holes
-magnet_glue_hole_height = 1; // .5
+magnet_glue_hole_height = 1.5; // .5
 
 // True if magnet closure should be generated. Magnet closure will fill the space determined for the glue above the magnet. IMPORTANT: You have to pause printing at specific layer to insert magnets. See console output or generate summary plate for instructions.
 magnet_generate_closure = false;
@@ -243,6 +243,10 @@ hinge_hole_diameter = hinge_join_type == "screw_self_tap"
 
 // Magnets
 magnet_holder_radius = magnet_holder_diameter/2;
+magnet_holder_rounding_fix_offset = max(
+  0,
+  ((sqrt(2) - 1) * (lip_rounding - magnet_holder_radius)) / sqrt(2)
+);
 magnet_hole_diameter = magnet_diameter + 2*magnet_looseness_offset;
 magnet_hole_height = magnet_height + magnet_glue_hole_height + 2*magnet_looseness_offset;
 
