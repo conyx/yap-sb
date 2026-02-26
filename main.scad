@@ -85,13 +85,13 @@ connection_bump_percentage = 70; // [0:1:100]
 magnets_number = 2; // [2: 2 magnets, 4: 4 magnets]
 
 // Magnet diameter
-magnet_diameter = 4;  // .5
+magnet_diameter = 3;  // .5
 
 // Magnet height
-magnet_height = 4;  // .5
+magnet_height = 3;  // .5
 
 // Magnets holder diameter (must be more than magnet_diameter)
-magnet_holder_diameter = 5.5;  // .5
+magnet_holder_diameter = 5;  // .5
 
 // Magnet holes outer dimension offset. The larger the number the looser the friction fit.
 magnet_looseness_offset = 0.15; // .05
