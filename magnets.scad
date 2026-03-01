@@ -26,14 +26,11 @@ module magnet_holder(height, wall_distance, wall_rounding, clearance) {
           }
 
       if (!clearance) {
-        effective_hole_height = magnet_generate_closure
-          ? magnet_hole_height - magnet_glue_hole_height
-          : magnet_hole_height;
         move([magnet_holder_rounding_fix_offset,
               -magnet_holder_rounding_fix_offset,
-              holder_height - magnet_hole_height])
+              holder_height - magnet_hole_height - (magnet_generate_closure ? magnet_closure_height : 0)])
           cylinder(d=magnet_hole_diameter,
-                   h=effective_hole_height + (magnet_generate_closure ? 0 : SHIMMERING_WALL_OFFSET));
+                   h=magnet_hole_height + (magnet_generate_closure ? 0 : SHIMMERING_WALL_OFFSET));
       }
     }
 }
@@ -129,17 +126,19 @@ module magnets() {
            str("Invalid magnets_number: ", magnets_number, ". ",
                "Must be 2 or 4"));
 
-    assert(box_height_inside >= magnet_hole_height,
+    required_height = magnet_hole_height + (magnet_generate_closure ? magnet_closure_height : 0);
+
+    assert(box_height_inside >= required_height,
            str("Not enough height in box for magnets. ",
                "Box height: ", bottom_height, "mm, ",
-               "required: ", magnet_hole_height, "mm"));
+               "required: ", required_height, "mm"));
 
     lid_available_height = lid_height - lp_height;
 
-    assert(lid_available_height >= magnet_hole_height,
+    assert(lid_available_height >= required_height,
            str("Not enough height in lid for magnets. ",
                "Lid available height: ", lid_available_height, "mm, ",
-               "required: ", magnet_hole_height, "mm"));
+               "required: ", required_height, "mm"));
 
     assert(magnet_holder_diameter > magnet_hole_diameter,
            str("Magnet holder diameter must be larger. ",
