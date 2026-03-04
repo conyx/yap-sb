@@ -111,18 +111,12 @@ magnet_closure_height = 0.45; // [0.1:0.05:1]
 hinge_join_type = "screw_nut"; // [pin: Simple pin, screw_nut: Screw with nut, screw_self_tap: Self-tapping screw]
 
 // # of hinges
-hinges_number = 2;
+hinges_number = 2; // [1:1:10]
 
 // # of segments of each hinge
-hinge_segments = 2;
+hinge_segments = 2; // [2:1:30]
 
-// Additional offset between hinge and the box/lid
-hinge_mount_gap = 0.1; // .05
-
-// Gap between hinge segments
-hinge_segments_gap = 0.15; // .05
-
-// Hinge segments ratio (ratio between lid and box hing segments length, use 1 to equal length)
+// Hinge segments ratio (ratio between lid and box hinge segments length, use 1 to equal length)
 hinge_segments_ratio = 1; // [0.2:0.1:5]
 
 // Hinge knuckle diameter
@@ -133,6 +127,12 @@ hinge_flip_last = true;
 
 // Hinge angle of the arm down from the vertical
 hinge_arm_angle = 45; // [30:1:90]
+
+// Additional offset between hinge and the box/lid
+hinge_mount_gap = 0.1; // .05
+
+// Gap between hinge segments
+hinge_segments_gap = 0.15; // .05
 
 /* [Hinges / simple pin] */
 
