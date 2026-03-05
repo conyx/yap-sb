@@ -62,10 +62,10 @@ compartment_bottom_radius = 0; // .5
 // Height of lip above box top, used for the friction fit.
 lip_height = 5; // .5
 
-// Wall thickness of the attachment lip.
+// Wall thickness of the lip.
 lip_thickness = 0.8; // .1
 
-// Lip outer dimension offset. The larger the number the looser the friction fit.
+// Lip outer dimension offset. The larger the number the looser friction fit.
 lip_looseness_offset = 0.15; // .05
 
 /* [Connection groove / bump] */
@@ -93,9 +93,6 @@ magnet_height = 3;  // .5
 // Magnets holder diameter (must be more than magnet_diameter)
 magnet_holder_diameter = 5;  // .5
 
-// Magnet holes outer dimension offset. The larger the number the looser the friction fit.
-magnet_looseness_offset = 0.15; // .05
-
 // Z (height) dimension offset for (super) glue to secure magnets in the holes
 magnet_glue_height = 1; // .5
 
@@ -104,6 +101,9 @@ magnet_generate_closure = false;
 
 // Z (height) dimension of the magnet closure.
 magnet_closure_height = 0.45; // [0.1:0.05:1]
+
+// Magnet holes dimension offset. The larger the number the looser friction fit.
+magnet_looseness_offset = 0.15; // .05
 
 /* [Hinges] */
 
@@ -162,7 +162,7 @@ hinge_nut_width = 1.8; // .1
 // Hinge screw nut size (in other word what spanner size will you use)
 hinge_nut_size = 4; // .1
 
-// Loosenes offset for head and nut
+// Loosenes offset for screw head and nut.  The larger the number the looser friction fit.
 hinge_screw_looseness_offset = 0.1; // .05
 
 /* [Hinges / self-tapping screw] */
