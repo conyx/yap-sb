@@ -2,7 +2,7 @@
 TINY = 0.01;
 
 // Shimmering walls offset
-SHIMMERING_WALL_OFFSET = 1;
+SHIMMERING_WALL_OFFSET = TINY;
 
 // Minnimal inner corner radius
 MIN_CORNER_RADIUS = TINY;

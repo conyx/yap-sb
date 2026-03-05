@@ -1,6 +1,7 @@
 include <BOSL2/std.scad>
 include <BOSL2/hinges.scad>
 include <BOSL2/fnliterals.scad>
+include <BOSL2/joiners.scad>
 
 include <utils.scad>
 include <constants.scad>
@@ -10,6 +11,7 @@ include <box.scad>
 include <lid.scad>
 include <magnets.scad>
 include <hinges.scad>
+include <latches.scad>
 include <summary.scad>
 
 /* [Main] */
@@ -179,6 +181,16 @@ hinge_self_tap_screw_tap_depth = 10; // .5
 // Safety gap between the screw spike and the edge of hinge
 hinge_self_tap_screw_gap = 2; // .5
 
+/* [Latches] */
+latch_x_width = 15;
+latch_z_height = 15;
+latch_y_thickness = 4;
+latch_hinge_arm_angle = 45;
+latch_hinge_gap = 0.15;
+latch_snap_lock_firmness = 0.5;
+latch_slope = 6;
+latch_looseness_offset = 0.15;
+
 /* [Lid notches] */
 
 // Where lid notches (for easier lid opening) should be generated
@@ -258,6 +270,19 @@ connection_groove_diameter = connection_groove_percentage / 100 * thickness;
 connection_bump_diameter = connection_bump_percentage / 100 * thickness;
 connection_rounding = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness/2);
 
+// Latches
+latch_radius = min(latch_x_width, latch_z_height) / 10;
+latch_x_width_outside = latch_x_width * 1.5;
+latch_x_width_back = latch_x_width * 0.9;
+latch_hinge_diameter = latch_y_thickness;
+latch_inner_hinge_segment_width = latch_x_width
+                                          - latch_z_height / latch_slope * 2 +
+                                          latch_hinge_gap;
+latch_notch_y_depth = latch_y_thickness / 2;
+latch_notch_z_height = min(latch_y_thickness / 2, latch_z_height / 5);
+latch_snap_lock_diameter_female = min(3, latch_y_thickness * 0.85);
+latch_snap_lock_diameter_male = latch_snap_lock_diameter_female * 0.9;
+
 // Lid notches
 lid_notch_radius = thickness / 2;
 
@@ -272,6 +297,9 @@ magnets();
 
 // Hinges
 hinges();
+
+// Latches
+latches();
 
 // Output summary
 summary();
