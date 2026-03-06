@@ -17,7 +17,7 @@ include <summary.scad>
 /* [Main] */
 
 // How the box and lid connect
-lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets]
+lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches]
 
 // Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase for better but slower results.
 resolution = 100;
@@ -231,7 +231,8 @@ compartments_grid = parse_compartments_grid(compartments_dimensions);
 generate_lid = lid_type != "no_lid";
 generate_lip = (lid_type == "lip" || lid_type == "lip_magnets");
 generate_magnets = (lid_type == "magnets" || lid_type == "lip_magnets" || lid_type == "hinges_magnets");
-generate_hinges = (lid_type == "hinges" || lid_type == "hinges_magnets");
+generate_hinges = (lid_type == "hinges" || lid_type == "hinges_magnets" || lid_type == "hinges_latches");
+generate_latches = lid_type == "hinges_latches";
 generate_connection = connection_type != "off" && generate_lid && !generate_lip &&
                     connection_groove_percentage > 0 && connection_bump_percentage > 0;
 
