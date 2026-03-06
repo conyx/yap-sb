@@ -72,7 +72,7 @@ module latch_snap_lock(is_male) {
 module latch_snap_lock_right(is_male) {
   _diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
   _z_offset = latch_notch_z_height + latch_snap_lock_diameter_female / 2;
-  _x_offset = _z_offset / latch_slope + (_diameter / 2) * (1 - latch_snap_lock_firmness);
+  _x_offset = _z_offset / latch_slope + (_diameter / 2) * (0.75 - 0.5 * latch_snap_lock_firmness);
   move([mean([latch_x_width, latch_x_width_back]) / 2 - _x_offset,
         0,
         latch_z_height - _z_offset])
@@ -98,7 +98,9 @@ module latch_lid() {
       latch_dovetail(true);
       latch_notch();
     }
-    latch_snap_locks(true);
+    if (latch_snap_lock) {
+      latch_snap_locks(true);
+    }
     latch_hinge(true);
   }
 }
@@ -116,7 +118,9 @@ module latch_box() {
           }
         latch_female_supports();
       }
-      latch_snap_locks(false);
+      if (latch_snap_lock) {
+        latch_snap_locks(false);
+      }
     }
   }
 }

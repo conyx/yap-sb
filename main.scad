@@ -185,6 +185,7 @@ hinge_self_tap_screw_gap = 2; // .5
 latch_x_width = 15;
 latch_z_height = 15;
 latch_y_thickness = 4;
+latch_snap_lock = true;
 latch_snap_lock_firmness = 0.5; // [0:0.05:1]
 latch_hinge_arm_angle = 45; // [30:1:90]
 latch_hinge_gap = 0.15; // .05
