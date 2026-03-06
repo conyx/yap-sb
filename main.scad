@@ -16,25 +16,25 @@ include <summary.scad>
 
 /* [Main] */
 
-// How box and lid connect
+// How the box and lid connect
 lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets]
 
-// Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results.
+// Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase for better but slower results.
 resolution = 100;
 
-// Number of fragments in preview mode (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results in preview mode.
+// Number of fragments in preview mode (a.k.a. $fn, a.k.a. resolution). Increase for better but slower results in preview mode.
 resolution_preview = 25;
 
-// Generate summary plate with dimensions and accessories info (only in preview mode).
+// Generate a summary plate with dimensions and accessory info (only in preview mode).
 generate_summary_plate = true;
 
-// Compartments dimensions as a flat vector. Format: depth, width, width, ..., 0, depth, width, ... Zeros separate rows. First number of each row is its Y depth, followed by X widths of compartments in that row. (TIP: Use "[100, 100]" for a single full-box compartment.)
+// Compartment dimensions as a flat vector. Format: depth, width, width, ..., 0, depth, width, ... Zeros separate rows. The first number of each row is its Y depth, followed by X widths of compartments in that row. (TIP: Use "[100, 100]" for a single full-box compartment.)
 compartments_dimensions = [50, 20, 55, 55, 20, 0, 25, 37.5, 37.5, 37.5, 37.5];
 
-// Bottom part height. The height of both the bottom and lid is the total height of the space inside the container.
+// Bottom part height. The sum of the bottom and lid heights equals the total interior height of the container.
 bottom_height = 25; // .5
 
-// Lid height. The height of both the bottom and lid is the total height of the space inside the container.
+// Lid height. The sum of the bottom and lid heights equals the total interior height of the container.
 lid_height = 10; // .5
 
 // Wall thickness. This adds to the outside dimensions of the box.
@@ -42,10 +42,10 @@ thickness = 2.4; // .1
 
 /* [Separators] */
 
-// Thickness of walls between compartments (aka separators).
+// Thickness of the walls between compartments (i.e., separators).
 separator_thickness = 1.0; // .1
 
-// True if separators should be generated also inside lid.
+// Whether separators should also be generated inside the lid.
 separators_inside_lid = false;
 
 /* [Rounding] */
@@ -56,7 +56,7 @@ corner_outer_radius = 4; // .5
 // Box/lid corner inner radius (0 = sharp inner corner).
 corner_inner_radius = 2; // .5
 
-// Compartment bottom corner radius (0 = sharp inner corner). Beware this could be very slow.
+// Compartment bottom corner radius (0 = sharp inner corner). Warning: high values can significantly slow rendering.
 compartment_bottom_radius = 0; // .5
 
 /* [Lip] */
@@ -67,12 +67,12 @@ lip_height = 5; // .5
 // Wall thickness of the lip.
 lip_thickness = 0.8; // .1
 
-// Lip outer dimension offset. The larger the number the looser friction fit.
+// Lip outer dimension offset. The larger the number, the looser the friction fit.
 lip_looseness_offset = 0.15; // .05
 
 /* [Connection groove / bump] */
 
-// Connection type on the top of box / lid wall: bump is the smaller protrusion, groove is the larger channel that receives it. Has no effect if 1) lid is NOT generated 2) lip is generated 3) bump or groove percentage is zero.
+// Connection type on top of the box/lid wall: bump is the smaller protrusion, groove is the larger channel that receives it. Has no effect if: 1) no lid is generated, 2) lip is generated, or 3) bump or groove percentage is zero.
 connection_type = "bump_box"; // [off: Off, bump_box: Bump on box & groove on lid, bump_lid: Bump on lid & groove on box]
 
 // Groove diameter as percentage of wall thickness. Must be >= bump percentage.
@@ -92,24 +92,24 @@ magnet_diameter = 3;  // .5
 // Magnet height
 magnet_height = 3;  // .5
 
-// Magnets holder diameter (must be more than magnet_diameter)
+// Magnet holder diameter (must be greater than magnet_diameter)
 magnet_holder_diameter = 5;  // .5
 
-// Z (height) dimension offset for (super) glue to secure magnets in the holes
+// Extra height for (super) glue to secure magnets in their holes
 magnet_glue_height = 1; // .5
 
-// True if magnet closure should be generated. Magnet closure will fill the space above the magnet. IMPORTANT: You have to pause printing at specific layer to insert magnets. See console output or generate summary plate for instructions.
+// Whether to generate a magnet closure that fills the space above the magnet. IMPORTANT: You have to pause printing at a specific layer to insert magnets. See console output or the summary plate for instructions.
 magnet_generate_closure = false;
 
-// Z (height) dimension of the magnet closure.
+// Height of the magnet closure.
 magnet_closure_height = 0.45; // [0.1:0.05:1]
 
-// Magnet holes dimension offset. The larger the number the looser friction fit.
+// Magnet hole dimension offset. The larger the number, the looser the friction fit.
 magnet_looseness_offset = 0.15; // .05
 
 /* [Hinges] */
 
-// How should be hinge segments joined. "Simple pin" creates only simple hole with specific diameter, "Screw with nut" also creates holes for screw head and nut, "Self-tapping screw" creates hole for screw head and adjusts last segment for self-tapping.
+// How hinge segments should be joined. "Simple pin" creates a simple hole with a specific diameter, "Screw with nut" also creates holes for the screw head and nut, "Self-tapping screw" creates a hole for the screw head and adjusts the last segment for self-tapping.
 hinge_join_type = "screw_nut"; // [pin: Simple pin, screw_nut: Screw with nut, screw_self_tap: Self-tapping screw]
 
 // # of hinges
@@ -118,19 +118,19 @@ hinges_number = 2; // [1:1:10]
 // # of segments of each hinge
 hinge_segments = 2; // [2:1:30]
 
-// Hinge segments ratio (ratio between lid and box hinge segments length, use 1 to equal length)
+// Hinge segments ratio (ratio between lid and box hinge segment lengths; use 1 for equal length)
 hinge_segments_ratio = 1; // [0.2:0.1:5]
 
 // Hinge knuckle diameter
 hinge_knuckle_diameter = 6;  // .5
 
-// If last hinge should be mirrored (e.g. for easier screwdriver access or symetric hinges pair)
+// Whether the last hinge should be mirrored (e.g., for easier screwdriver access or a symmetric hinge pair)
 hinge_flip_last = true;
 
-// Hinge angle of the arm down from the vertical
+// Angle of the hinge arm measured down from the vertical
 hinge_arm_angle = 45; // [30:1:90]
 
-// Additional offset between hinge and the box/lid
+// Additional offset between the hinge and the box/lid
 hinge_mount_gap = 0.1; // .05
 
 // Gap between hinge segments
@@ -138,10 +138,10 @@ hinge_segments_gap = 0.15; // .05
 
 /* [Hinges / simple pin] */
 
-// Length of each hinge (it is also minimum length of hinge pin)
+// Length of each hinge (also the minimum length of the hinge pin)
 hinge_pin_length = 20;
 
-// Diameter of the hinge pin (poor guy tip: use 1.75 for fillament string)
+// Diameter of the hinge pin (budget tip: use 1.75 for a filament string)
 hinge_pin_diameter = 1.75; // .05
 
 /* [Hinges / screw with nut] */
@@ -158,27 +158,27 @@ hinge_screw_head_width = 1.8; // .1
 // Hinge screw head diameter
 hinge_screw_head_diameter = 4; // .1
 
-// Hinge screw nut width (the depth of the thread hole)
+// Hinge screw nut width (depth of the nut recess)
 hinge_nut_width = 1.8; // .1
 
-// Hinge screw nut size (in other word what spanner size will you use)
+// Hinge screw nut size (i.e., the spanner/wrench size needed)
 hinge_nut_size = 4; // .1
 
-// Loosenes offset for screw head and nut.  The larger the number the looser friction fit.
+// Looseness offset for the screw head and nut. The larger the number, the looser the friction fit.
 hinge_screw_looseness_offset = 0.1; // .05
 
 /* [Hinges / self-tapping screw] */
 
-// Type of the self-tap screw (standardized ISO/metric and UTS/imperial)
+// Type of the self-tapping screw (ISO/metric and UTS/imperial standards)
 hinge_self_tap_screw_type = "M2"; // [M1.6: M1.6 {ISO / metric}, M1.8: M1.8 {ISO / metric}, M2: M2 {ISO / metric}, M2.5: M2.5 {ISO / metric}, M3: M3 {ISO / metric}, M3.5: M3.5 {ISO / metric}, M4: M4 {ISO / metric}, M5: M5 {ISO / metric}, M6: M6 {ISO / metric}, #0: #0 {UTS / imperial}, #1: #1 {UTS / imperial}, #2: #2 {UTS / imperial}, #3: #3 {UTS / imperial}, #4: #4 {UTS / imperial}, #5: #5 {UTS / imperial}, #6: #6 {UTS / imperial}, #8: #8 {UTS / imperial}, #10: #10 {UTS / imperial}, #12: #12 {UTS / imperial}]
 
-// Length of the self-tap screw (including head)
+// Length of the self-tapping screw (including head)
 hinge_self_tap_screw_length = 20;
 
-// Don't make the tapped part of the screw hole in the last hinge segment larger than this.
+// Maximum depth of the tapped portion of the screw hole in the last hinge segment.
 hinge_self_tap_screw_tap_depth = 10; // .5
 
-// Safety gap between the screw spike and the edge of hinge
+// Safety gap between the screw tip and the edge of the hinge
 hinge_self_tap_screw_gap = 2; // .5
 
 /* [Latches] */
@@ -199,7 +199,7 @@ lid_notches = "x"; // [no: None,x:X sides only, y:Y sides only, all:Both X and Y
 // # of lid notches
 lid_notches_number = 2;
 
-// Lid notches spacing
+// Lid notch spacing
 lid_notches_spacing = 1.5; // .1
 
 /* [Hidden] */
