@@ -6,7 +6,11 @@ module summary() {
      str("X (width): ", x_width_outside, "mm"),
      str("Y (depth): ", y_depth_outside, "mm")],
     generate_hinges
-      ? [str("Y (depth) w/ hinges: ", y_depth_outside + hinge_mount_gap + hinge_knuckle_diameter, "mm")]
+      ? [str("Y (depth) w/ hinges",
+             ": ",
+             y_depth_outside + hinge_mount_gap + hinge_knuckle_diameter
+               + (generate_latches ? latch_hinge_diameter : 0),
+             "mm")]
       : [],
     [str("Z (height) box: ", box_height_outside, "mm")],
     generate_lid

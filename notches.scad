@@ -21,7 +21,9 @@ module notches() {
   for (n = [0 : lid_notches_number - 1]) {
     z_position = n * (lid_notch_radius * 2 + lid_notches_spacing);
     if (lid_notches == "x" || lid_notches == "all") {
-      lid_notch("x", z_position_offset + z_position, true);
+      if (!generate_latches) {
+        lid_notch("x", z_position_offset + z_position, true);
+      }
       if (!generate_hinges) {
         lid_notch("x", z_position_offset + z_position, false);
       }

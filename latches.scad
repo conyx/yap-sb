@@ -126,11 +126,42 @@ module latch_box() {
 }
 
 module latches() {
-  // TODO
-  fwd(100)
-  color(OUTSIDE_ACCESSORIES_COLOR) {
-    latch_box();
-    latch_lid();
-    latch_lid_hinge();
+  if (generate_latches) {
+    assert(latches_number * latch_x_width_outside <= x_width_outside,
+           str("Total latch width exceeds box width. ",
+               "Total latch width: ", latches_number * latch_x_width_outside, "mm, ",
+               "box width: ", x_width_outside, "mm"));
+
+    // Calculate spacing for equal distribution along X axis
+    latch_spacing = (x_width_outside - latches_number * latch_x_width_outside) / (latches_number + 1);
+
+    box_center_x = -(x_width_outside/2 + box_x_margin);
+    lid_center_x = x_width_outside/2 + lid_x_margin;
+    latch_y = -y_depth_outside/2;
+
+    color(OUTSIDE_ACCESSORIES_COLOR)
+    for (i = [0 : latches_number - 1]) {
+      latch_x_offset = (i + 1) * latch_spacing + (i + 0.5) * latch_x_width_outside - x_width_outside/2;
+
+      // Latch box on front-top of box (Z offset by hinge diameter)
+      move([box_center_x + latch_x_offset,
+            latch_y - latch_y_thickness/2,
+            box_height_outside - latch_z_height - latch_hinge_diameter/2])
+        latch_box();
+
+      // Latch lid hinge on front-top of lid
+      move([lid_center_x + latch_x_offset,
+            latch_y,
+            lid_height_outside])
+        latch_lid_hinge();
+
+      // Separate latch lid parts next to the lid (right of lid)
+      move([x_width_outside + lid_x_margin + lid_x_margin
+              + latch_x_width/2
+              + i * (latch_x_width + lid_x_margin),
+            0,
+            latch_y_thickness / 2])
+        latch_lid();
+    }
   }
 }
