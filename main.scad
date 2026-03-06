@@ -185,11 +185,10 @@ hinge_self_tap_screw_gap = 2; // .5
 latch_x_width = 15;
 latch_z_height = 15;
 latch_y_thickness = 4;
-latch_hinge_arm_angle = 45;
-latch_hinge_gap = 0.15;
-latch_snap_lock_firmness = 0.5;
-latch_slope = 6;
-latch_looseness_offset = 0.15;
+latch_snap_lock_firmness = 0.5; // [0:0.05:1]
+latch_hinge_arm_angle = 45; // [30:1:90]
+latch_hinge_gap = 0.15; // .05
+latch_looseness_offset = 0.1; // .05
 
 /* [Lid notches] */
 
@@ -271,6 +270,7 @@ connection_bump_diameter = connection_bump_percentage / 100 * thickness;
 connection_rounding = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness/2);
 
 // Latches
+latch_slope = 6;
 latch_radius = min(latch_x_width, latch_z_height) / 10;
 latch_x_width_outside = latch_x_width * 1.5;
 latch_x_width_back = latch_x_width * 0.9;
