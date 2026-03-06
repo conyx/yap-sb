@@ -182,13 +182,32 @@ hinge_self_tap_screw_tap_depth = 10; // .5
 hinge_self_tap_screw_gap = 2; // .5
 
 /* [Latches] */
+
+// # of latches
+latches_number = 1; // [1:1:10]
+
+// Width of each latch (X axis)
 latch_x_width = 15;
+
+// Height of each latch (Z axis)
 latch_z_height = 15;
+
+// Thickness of each latch (Y axis). Also determines the hinge knuckle diameter.
 latch_y_thickness = 4;
+
+// Whether to add snap-lock bumps that hold the latch closed
 latch_snap_lock = true;
+
+// How firmly the snap lock holds (0 = loosest, 1 = firmest). Higher values produce larger bumps.
 latch_snap_lock_firmness = 0.5; // [0:0.05:1]
+
+// Angle of the latch hinge arm measured down from the vertical
 latch_hinge_arm_angle = 45; // [30:1:90]
+
+// Gap between latch hinge segments
 latch_hinge_gap = 0.15; // .05
+
+// Latch dovetail dimension offset. The larger the number, the looser the fit.
 latch_looseness_offset = 0.1; // .05
 
 /* [Lid notches] */
