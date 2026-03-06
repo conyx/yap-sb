@@ -45,15 +45,12 @@ module summary() {
     : [];
 
   // Column 4: Printing pause (magnet closure)
-  box_pause_end = box_height_outside - magnet_closure_height;
-  box_pause_start = box_pause_end - 2*magnet_looseness_offset;
-  lid_pause_end = lid_height_outside - lp_height - magnet_closure_height;
-  lid_pause_start = lid_pause_end - 2*magnet_looseness_offset;
+  box_pause = box_height_outside - magnet_closure_height;
+  lid_pause = lid_height_outside - lp_height - magnet_closure_height;
   col4 = (generate_magnets && magnet_generate_closure)
     ? ["Pause printing to insert magnets:",
-       str("Box pause at Z: <", box_pause_start, " - ", box_pause_end, ">mm"),
-       str("Lid pause at Z: <", lid_pause_start, " - ", lid_pause_end, ">mm"),
-       str("Pause as high as possible!")]
+       str("Box: AFTER Z layer: <", box_pause, ">mm"),
+       str("Lid: AFTER Z layer: <", lid_pause, ">mm")]
     : [];
 
   // Echo summary
