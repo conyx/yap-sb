@@ -20,7 +20,7 @@ include <summary.scad>
 lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets]
 
 // Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results.
-resolution = 50;
+resolution = 100;
 
 // Number of fragments in preview mode (a.k.a. $fn, a.k.a. resolution). Increase to better but slower results in preview mode.
 resolution_preview = 25;
