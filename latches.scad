@@ -40,11 +40,11 @@ module latch_female_support() {
                   [0, latch_y_thickness],
                   [(latch_x_width_outside - latch_x_width_female) / 2, latch_y_thickness],
                   [(latch_x_width_outside - latch_x_width_female) / 2, latch_y_thickness - TINY]];
-  skin([bottom_mount, top_mount], z=[0,latch_y_thickness], slices=$fn);
+  skin([bottom_mount, top_mount], z=[0,latch_box_support_z_height], slices=$fn);
 }
 
 module latch_female_support_left() {
-  move([-latch_x_width_outside / 2, -latch_y_thickness / 2, -latch_y_thickness - latch_z_height / 2])
+  move([-latch_x_width_outside / 2, -latch_y_thickness / 2, -latch_box_support_z_height - latch_z_height / 2])
     latch_female_support();
 }
 

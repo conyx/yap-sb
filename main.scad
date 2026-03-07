@@ -127,7 +127,7 @@ hinge_knuckle_diameter = 6;  // .5
 // Whether the last hinge should be mirrored (e.g., for easier screwdriver access or a symmetric hinge pair)
 hinge_flip_last = true;
 
-// Angle of the hinge arm measured down from the vertical
+// Angle of the hinge arm
 hinge_arm_angle = 45; // [30:1:90]
 
 // Additional offset between the hinge and the box/lid
@@ -201,7 +201,10 @@ latch_snap_lock = true;
 // How firmly the snap lock holds (0 = loosest, 1 = firmest). Higher values produce larger bumps.
 latch_snap_lock_firmness = 0.5; // [0:0.05:1]
 
-// Angle of the latch hinge arm measured down from the vertical
+// Angle of the latch arm (creates the support which holds box-part of the latch)
+latch_arm_angle = 45; // [30:1:90]
+
+// Angle of the latch hinge arm
 latch_hinge_arm_angle = 45; // [30:1:90]
 
 // Gap between latch hinge segments
@@ -303,6 +306,7 @@ latch_notch_y_depth = latch_y_thickness / 2;
 latch_notch_z_height = min(latch_y_thickness / 2, latch_z_height / 5);
 latch_snap_lock_diameter_female = min(3, latch_y_thickness * 0.85);
 latch_snap_lock_diameter_male = latch_snap_lock_diameter_female * 0.9;
+latch_box_support_z_height = latch_y_thickness * tan(90 - latch_arm_angle);
 
 // Lid notches
 lid_notch_radius = thickness / 2;
