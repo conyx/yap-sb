@@ -193,7 +193,7 @@ latch_x_width = 20;
 latch_z_height = 15;
 
 // Thickness of each latch (Y axis). Also determines the hinge knuckle diameter.
-latch_y_thickness = 6;
+latch_y_thickness = 6; // .5
 
 // Whether to add snap-lock bumps that hold the latch closed
 latch_snap_lock = true;
