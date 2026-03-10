@@ -116,7 +116,7 @@ hinge_join_type = "screw_nut"; // [pin: Simple pin, screw_nut: Screw with nut, s
 hinges_number = 2; // [1:1:10]
 
 // # of segments of each hinge
-hinge_segments = 2; // [2:1:30]
+hinge_segments = 3; // [2:1:30]
 
 // Hinge segments ratio (ratio between lid and box hinge segment lengths; use 1 for equal length)
 hinge_segments_ratio = 1; // [0.2:0.1:5]
