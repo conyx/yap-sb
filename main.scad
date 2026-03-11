@@ -17,7 +17,7 @@ include <summary.scad>
 /* [Main] */
 
 // How the box and lid connect
-lid_type = "hinges_magnets"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches]
+lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches]
 
 // Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase for better but slower results.
 resolution = 100;
@@ -109,8 +109,8 @@ magnet_looseness_offset = 0.15; // .05
 
 /* [Hinges] */
 
-// How hinge segments should be joined. "Simple pin" creates a simple hole with a specific diameter, "Screw with nut" also creates holes for the screw head and nut, "Self-tapping screw" creates a hole for the screw head and adjusts the last segment for self-tapping.
-hinge_join_type = "screw_nut"; // [pin: Simple pin, screw_nut: Screw with nut, screw_self_tap: Self-tapping screw]
+// How hinge segments should be joined.  "Print-in-place" prints the pin directly as part of the hinge (no hardware needed), "Simple pin" creates a simple hole with a specific diameter, "Screw with nut" additionally creates holes for the screw head and nut, "Self-tapping screw" creates a hole for the screw head and adjusts the last segment for self-tapping.
+hinge_join_type = "print_in_place"; // [print_in_place: Print-in-place, pin: Simple pin, screw_nut: Screw with nut, screw_self_tap: Self-tapping screw]
 
 // # of hinges
 hinges_number = 2; // [1:1:10]
@@ -125,7 +125,7 @@ hinge_segments_ratio = 1; // [0.2:0.1:5]
 hinge_knuckle_diameter = 6;  // .5
 
 // Whether the last hinge should be mirrored (e.g., for easier screwdriver access or a symmetric hinge pair)
-hinge_flip_last = true;
+hinge_flip_last = false;
 
 // Angle of the hinge arm measured down from the vertical. 90 = No arm.
 hinge_arm_angle = 45; // [30:1:90]
@@ -136,10 +136,15 @@ hinge_mount_gap = 0.1; // .05
 // Gap between hinge segments
 hinge_segments_gap = 0.15; // .05
 
+/* [Hinges / print-in-place] */
+
+// Length of each print-in-place hinge
+hinge_in_place_length = 25;
+
 /* [Hinges / simple pin] */
 
 // Length of each hinge (also the minimum length of the hinge pin)
-hinge_pin_length = 20;
+hinge_pin_length = 25;
 
 // Diameter of the hinge pin (budget tip: use 1.75 for a filament string)
 hinge_pin_diameter = 1.75; // .05
@@ -147,7 +152,7 @@ hinge_pin_diameter = 1.75; // .05
 /* [Hinges / screw with nut] */
 
 // Hinge screw length (without head)
-hinge_screw_length = 30;
+hinge_screw_length = 25;
 
 // Hinge screw diameter
 hinge_screw_diameter = 2.5;  // .05
@@ -173,7 +178,7 @@ hinge_screw_looseness_offset = 0.1; // .05
 hinge_self_tap_screw_type = "M2"; // [M1.6: M1.6 {ISO / metric}, M1.8: M1.8 {ISO / metric}, M2: M2 {ISO / metric}, M2.5: M2.5 {ISO / metric}, M3: M3 {ISO / metric}, M3.5: M3.5 {ISO / metric}, M4: M4 {ISO / metric}, M5: M5 {ISO / metric}, M6: M6 {ISO / metric}, #0: #0 {UTS / imperial}, #1: #1 {UTS / imperial}, #2: #2 {UTS / imperial}, #3: #3 {UTS / imperial}, #4: #4 {UTS / imperial}, #5: #5 {UTS / imperial}, #6: #6 {UTS / imperial}, #8: #8 {UTS / imperial}, #10: #10 {UTS / imperial}, #12: #12 {UTS / imperial}]
 
 // Length of the self-tapping screw (including head)
-hinge_self_tap_screw_length = 20;
+hinge_self_tap_screw_length = 25;
 
 // Maximum depth of the tapped portion of the screw hole in the last hinge segment.
 hinge_self_tap_screw_tap_depth = 10; // .5
@@ -272,12 +277,16 @@ hinge_length = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_length + hinge_self_tap_screw_gap
   : hinge_join_type == "screw_nut"
     ? hinge_screw_length + hinge_screw_head_width + 4*hinge_screw_looseness_offset
-    : hinge_pin_length;
+    : hinge_join_type == "print_in_place"
+      ? hinge_in_place_length
+      : hinge_pin_length;
 hinge_hole_diameter = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_type
   : hinge_join_type == "screw_nut"
     ? hinge_screw_diameter
-    : hinge_pin_diameter;
+    : hinge_join_type == "print_in_place"
+      ? in_place_knuckle_hinge_pin_diam(hinge_knuckle_diameter)
+      : hinge_pin_diameter;
 
 // Magnets
 magnet_holder_radius = magnet_holder_diameter/2;

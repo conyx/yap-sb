@@ -1,3 +1,8 @@
+function in_place_knuckle_hinge_pin_diam(knuckle_diam) =
+  knuckle_diam >= 5
+    ? knuckle_diam - 1
+    : knuckle_diam * 0.8;
+
 function parse_compartments_grid(compartments_flat) =
   let(
     _a1 = assert(len(compartments_flat) >= 2,

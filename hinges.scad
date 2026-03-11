@@ -13,6 +13,7 @@ module hinge(is_box_hinge) {
                   pin_diam = hinge_hole_diameter,
                   screw_head = "flat",
                   tap_depth = hinge_self_tap_screw_tap_depth,
+                  in_place = hinge_join_type == "print_in_place",
                   gap = hinge_segments_gap,
                   inner = !is_box_hinge,
                   arm_angle = hinge_arm_angle,
@@ -51,6 +52,12 @@ module hinges() {
            str("Total hinge length exceeds box width. ",
                "Total hinge length: ", hinges_number * hinge_length, "mm, ",
                "box width: ", x_width_outside, "mm"));
+
+    if (hinge_join_type == "print_in_place") {
+      assert(hinge_segments >= 3,
+             str("Print-in-place hinge requires at least 3 segments. ",
+                 "Current segments: ", hinge_segments));
+    }
 
     if (hinge_join_type == "screw_nut") {
       screw_head_cut_diameter = hinge_screw_head_diameter + 2*hinge_screw_looseness_offset;
