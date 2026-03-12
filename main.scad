@@ -20,7 +20,7 @@ include <summary.scad>
 lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches]
 
 // Model detail in preview mode. Increase for better but slower results in preview mode.
-model_detail_preview = 0.25; // [0:0.01:1]
+model_detail_preview = 0.4; // [0:0.01:1]
 
 // Model detail of the result STL. Increase for better but slower results when generating STL.
 model_detail_stl = 1; // [0:0.01:1]
@@ -56,7 +56,7 @@ corner_outer_radius = 4; // .5
 // Box/lid corner inner radius (0 = sharp inner corner).
 corner_inner_radius = 2; // .5
 
-// Compartment bottom corner radius (0 = sharp inner corner). Warning: high values can significantly slow rendering.
+// Compartment bottom corner radius (0 = sharp inner corner).
 compartment_bottom_radius = 0; // .5
 
 /* [Lip] */
