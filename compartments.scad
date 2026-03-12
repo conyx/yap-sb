@@ -61,7 +61,8 @@ module compartments(height, z_offset, outer_rounding, inner_rounding, bottom_rou
         offset_sweep(
           rect([final_width, final_depth], rounding = cutout_corner_rounding),
           height = height,
-          bottom = os_circle(r = bottom_rounding)
+          bottom = os_circle(r = bottom_rounding),
+          steps = 4 + 4 * bottom_rounding * model_detail
         );
     }
   }

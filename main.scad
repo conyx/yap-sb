@@ -23,7 +23,7 @@ lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip
 model_detail_preview = 0.4; // [0:0.01:1]
 
 // Model detail of the result STL. Increase for better but slower results when generating STL.
-model_detail_stl = 1; // [0:0.01:1]
+model_detail_stl = 0.9; // [0:0.01:1]
 
 // Generate a summary plate with dimensions and accessory info (only in preview mode).
 generate_summary_plate = true;
