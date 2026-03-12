@@ -19,11 +19,11 @@ include <summary.scad>
 // How the box and lid connect
 lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches]
 
-// Number of fragments (a.k.a. $fn, a.k.a. resolution). Increase for better but slower results.
-resolution = 100;
+// Model detail in preview mode. Increase for better but slower results in preview mode.
+model_detail_preview = 0.25; // [0:0.01:1]
 
-// Number of fragments in preview mode (a.k.a. $fn, a.k.a. resolution). Increase for better but slower results in preview mode.
-resolution_preview = 25;
+// Model detail of the result STL. Increase for better but slower results when generating STL.
+model_detail_stl = 1; // [0:0.01:1]
 
 // Generate a summary plate with dimensions and accessory info (only in preview mode).
 generate_summary_plate = true;
@@ -231,7 +231,9 @@ lid_notches_spacing = 1.5; // .1
 
 /* [Hidden] */
 
-$fn = $preview ? resolution_preview : resolution;
+model_detail = $preview ? model_detail_preview : model_detail_stl;
+$fs = pow(10, -model_detail); // 1 = min detail, 0.1 = max detail
+$fa = pow(10, 1 - model_detail); // 10 = min detail, 1 = max detail
 
 compartments_grid = parse_compartments_grid(compartments_dimensions);
 
