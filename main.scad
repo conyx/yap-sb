@@ -198,7 +198,7 @@ latch_x_width = 20;
 latch_z_height = 15;
 
 // Thickness of each latch (Y axis). Also determines the hinge knuckle diameter.
-latch_y_thickness = 6; // .5
+latch_y_thickness = 6; // [3.5:0.5:10]
 
 // Whether to add snap-lock bumps that hold the latch closed
 latch_snap_lock = true;
@@ -315,7 +315,7 @@ latch_inner_hinge_segment_width = latch_x_width
                                           latch_hinge_gap;
 latch_notch_y_depth = latch_y_thickness / 2;
 latch_notch_z_height = min(latch_y_thickness / 2, latch_z_height / 5);
-latch_snap_lock_diameter_female = min(3, latch_y_thickness * 0.85);
+latch_snap_lock_diameter_female = 3;
 latch_snap_lock_diameter_male = latch_snap_lock_diameter_female * 0.9;
 latch_support_z_height = latch_y_thickness * tan(90 - latch_support_angle);
 
