@@ -23,17 +23,35 @@ module box() {
                      edges = "Z");
           }
 
+          compartment_outer_rounding = max(
+            MIN_CORNER_RADIUS,
+            corner_inner_radius,
+            corner_outer_radius - thickness - lp_thickness - lp_looseness_offset
+          );
+
           // Cut out inside
           compartments(
             height = box_height_outside,
             z_offset = thickness,
-            outer_rounding = max(MIN_CORNER_RADIUS,
-                                 corner_inner_radius,
-                                 corner_outer_radius - thickness - lp_thickness - lp_looseness_offset),
+            outer_rounding = compartment_outer_rounding,
             inner_rounding = max(MIN_CORNER_RADIUS, corner_inner_radius),
             bottom_rounding = compartment_bottom_radius,
             edge_extension = 0
           );
+
+          // Cut out separator Z offset from the top
+          if (separators_z_offset > 0) {
+            assert(separators_z_offset <= bottom_height + lp_height,
+              str("separators_z_offset must be less than bottom_height (+ lip_height if lip used) (= ",
+                  bottom_height + lp_height, "mm). ",
+                  "Current value: ", separators_z_offset, "mm"));  
+          
+            up(box_height_outside - separators_z_offset)
+              cuboid([x_width, y_depth, separators_z_offset + SHIMMERING_WALL_OFFSET],
+                     rounding = compartment_outer_rounding,
+                     edges = "Z",
+                     anchor = BOTTOM);
+          }
         }
 
       // Connection bump

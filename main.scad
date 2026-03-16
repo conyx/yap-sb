@@ -45,7 +45,10 @@ thickness = 2.4; // .1
 // Thickness of the walls between compartments (i.e., separators).
 separator_thickness = 1.0; // .1
 
-// Whether separators should also be generated inside the lid.
+// Lowers separators from the top by this amount, creating shared open space above the compartments (0 = separators reach full height).
+separators_z_offset = 0; // .5
+
+// Whether corresponding separators should also be generated inside the lid.
 separators_inside_lid = false;
 
 /* [Rounding] */
