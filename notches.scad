@@ -24,7 +24,7 @@ module notches() {
       if (!generate_latches) {
         lid_notch("x", z_position_offset + z_position, true);
       }
-      if (!generate_hinges) {
+      if (!generate_hinges && !generate_latches_back) {
         lid_notch("x", z_position_offset + z_position, false);
       }
     }
