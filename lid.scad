@@ -1,5 +1,3 @@
-include <notches.scad>
-
 // Main lid module
 module lid() {
   // Lip-related assertions (only when lip is used)

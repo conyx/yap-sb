@@ -1,12 +1,13 @@
 include <BOSL2/std.scad>
-include <BOSL2/hinges.scad>
 include <BOSL2/fnliterals.scad>
+include <BOSL2/hinges.scad>
 include <BOSL2/joiners.scad>
 
-include <utils.scad>
 include <constants.scad>
+include <utils.scad>
 include <compartments.scad>
 include <connection.scad>
+include <notches.scad>
 include <box.scad>
 include <lid.scad>
 include <magnets.scad>
