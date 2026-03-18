@@ -31,6 +31,9 @@ generate_summary_plate = true;
 // Compartment dimensions as a flat vector. Format: depth, width, width, ..., 0, depth, width, ... Zeros separate rows. The first number of each row is its Y depth, followed by X widths of compartments in that row. (TIP: Use "[100, 100]" for a single full-box compartment.)
 compartments_dimensions = [50, 20, 55, 55, 20, 0, 25, 37.5, 37.5, 37.5, 37.5];
 
+// If true, rows are generated along Y axis instead of X axis.
+compartments_transpose = false;
+
 // Bottom part height. The sum of the bottom and lid heights equals the total interior height of the container.
 bottom_height = 25; // .5
 
@@ -260,14 +263,15 @@ box_x_margin = 2;
 lid_x_margin = 2;
 latch_margin = 2;
 
-// Total X width: sum of compartment widths + separators in each row
-x_width = max([for (row = compartments_grid)
+// Compute row/column totals, then assign based on transpose
+_rows_size = sum([for (row = compartments_grid) row[0]])
+             + (len(compartments_grid) - 1) * separator_thickness;
+_columns_size = max([for (row = compartments_grid)
   let(widths = row[1], n = len(widths))
   sum(widths) + (n - 1) * separator_thickness
 ]);
-// Total Y depth: sum of row depths + separators between rows
-y_depth = sum([for (row = compartments_grid) row[0]])
-          + (len(compartments_grid) - 1) * separator_thickness;
+x_width = compartments_transpose ? _rows_size : _columns_size;
+y_depth = compartments_transpose ? _columns_size : _rows_size;
 x_width_outside = x_width + thickness*2 + lp_thickness*2 + lp_looseness_offset*2;
 y_depth_outside = y_depth + thickness*2 + lp_thickness*2 + lp_looseness_offset*2;
 bottom_height_outside = bottom_height + thickness;
