@@ -223,8 +223,8 @@ latch_looseness_offset = 0.1; // .05
 
 /* [Lid notches] */
 
-// Where lid notches (for easier lid opening) should be generated
-lid_notches = "x"; // [no: None,x:X sides only, y:Y sides only, all:Both X and Y sides]
+// Where lid notches (for easier lid opening) should be generated. This has no effect on the sides where hinges are mounted.
+lid_notches = "all"; // [no: None,x:X sides only, y:Y sides only, all:Both X and Y sides]
 
 // # of lid notches
 lid_notches_number = 2;
