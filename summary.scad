@@ -14,7 +14,9 @@ module summary() {
                + (generate_latches_back ? latch_hinge_diameter : 0),
              "mm")]
       : [],
-    [str("Z (height) box: ", box_height_outside, "mm")],
+    [str(lid_type == "slider" ? "Z (height) box (w/o slider rail): " : "Z (height) box: ",
+         box_height_outside,
+         "mm")],
     generate_lid
       ? [str("Z (height) lid: ", lid_height_outside, "mm"),
          str("Z (height) overall: ", box_height_outside + lid_height_outside, "mm")]

@@ -8,6 +8,7 @@ include <utils.scad>
 include <compartments.scad>
 include <connection.scad>
 include <notches.scad>
+include <slider.scad>
 include <box.scad>
 include <lid.scad>
 include <magnets.scad>
@@ -18,7 +19,7 @@ include <summary.scad>
 /* [Main] */
 
 // How the box and lid connect
-lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, latches: Latches, lip_latches: Lip and latches, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches]
+lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, latches: Latches, lip_latches: Lip and latches, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches, slider: Slider]
 
 // Model detail in preview mode. Increase for better but slower results in preview mode.
 model_detail_preview = 0.4; // [0:0.01:1]
@@ -35,10 +36,10 @@ compartments_dimensions = [50, 20, 55, 55, 20, 0, 25, 37.5, 37.5, 37.5, 37.5];
 // If true, rows are generated along Y axis instead of X axis.
 compartments_transpose = false;
 
-// Bottom part height. The sum of the bottom and lid heights equals the total interior height of the container.
+// Bottom part (box) height. The sum of the bottom and lid heights equals the total interior height of the container.
 bottom_height = 25; // .5
 
-// Lid height. The sum of the bottom and lid heights equals the total interior height of the container.
+// Lid height. The sum of the bottom and lid heights equals the total interior height of the container. This has no effect if slider lid in use. 
 lid_height = 10; // .5
 
 // Wall thickness. This adds to the outside dimensions of the box.
@@ -77,9 +78,32 @@ lip_thickness = 0.8; // .1
 // Lip outer dimension offset. The larger the number, the looser the friction fit.
 lip_looseness_offset = 0.15; // .05
 
+/* [Slider lid] */
+
+// The thickness of the slider lid. Adds overall height.
+slider_lid_thickness = 3;
+
+// How deep the slider lid sits inside the box rail, as a percentage of wall thickness. Higher values make the lid more secure but the box harder to print.
+slider_lid_rail_grip = 50; // [20:1:80]
+
+// Shape of the notch pattern on top of the slider lid. "None" disables notches. "Full" does not form any shape and uses the full Y depth of the lid.
+slider_lid_notches = "none"; // [none: None, full: Full, circle: Circle, triangle: Triangle, square: Square, heart: Heart]
+
+// Number of notches cut into the slider lid.
+slider_lid_notches_number = 8; // 1
+
+// Width of each individual notch.
+slider_lid_notch_width = 3; // 1
+
+// Spacing between consecutive notches.
+slider_lid_notches_spacing = 1; // .2
+
+// Whether to add snap-lock bumps that hold the lid closed
+slider_lid_snap_lock = true;
+
 /* [Connection groove / bump] */
 
-// Connection type on top of the box/lid wall: bump is the smaller protrusion, groove is the larger channel that receives it. Has no effect if: 1) no lid is generated, 2) lip is generated, or 3) bump or groove percentage is zero.
+// Connection type on top of the box/lid wall: bump is the smaller protrusion, groove is the larger channel that receives it. Has no effect if: 1) slider lid or no lid is generated, 2) lip is generated, or 3) bump or groove percentage is zero.
 connection_type = "bump_box"; // [off: Off, bump_box: Bump on box & groove on lid, bump_lid: Bump on lid & groove on box]
 
 // Groove diameter as percentage of wall thickness. Must be >= bump percentage.
@@ -227,7 +251,7 @@ latch_looseness_offset = 0.1; // .05
 
 /* [Lid notches] */
 
-// Where lid notches (for easier lid opening) should be generated. This has no effect on the sides where hinges are mounted.
+// Where lid notches (for easier lid opening) should be generated. This has no effect on the sides where hinges are mounted. Also, this has no effect if slider lid in use.
 lid_notches = "all"; // [no: None,x:X sides only, y:Y sides only, all:Both X and Y sides]
 
 // # of lid notches
@@ -251,8 +275,10 @@ generate_magnets = (lid_type == "magnets" || lid_type == "lip_magnets" || lid_ty
 generate_hinges = (lid_type == "hinges" || lid_type == "hinges_magnets" || lid_type == "hinges_latches");
 generate_latches = (lid_type == "latches" || lid_type == "lip_latches" || lid_type == "hinges_latches");
 generate_latches_back = (lid_type == "latches" || lid_type == "lip_latches");
-generate_connection = connection_type != "off" && generate_lid && !generate_lip &&
-                    connection_groove_percentage > 0 && connection_bump_percentage > 0;
+generate_connection = connection_type != "off" &&
+                      generate_lid && lid_type != "slider" &&
+                      !generate_lip &&
+                      connection_groove_percentage > 0 && connection_bump_percentage > 0;
 
 // Reset lip parameters if needed
 lp_height = generate_lip ? lip_height : 0;
@@ -278,7 +304,7 @@ y_depth_outside = y_depth + thickness*2 + lp_thickness*2 + lp_looseness_offset*2
 bottom_height_outside = bottom_height + thickness;
 box_height_inside = bottom_height + lp_height;
 box_height_outside = bottom_height_outside + lp_height;
-lid_height_outside = lid_height + thickness;
+lid_height_outside = lid_type == "slider" ? slider_lid_thickness : lid_height + thickness;
 lip_rounding = max(MIN_CORNER_RADIUS,
                    corner_outer_radius - thickness - lp_looseness_offset);
 lid_cut_out_rounding = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness);
