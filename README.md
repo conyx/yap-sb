@@ -1,7 +1,6 @@
-[boxee.scad] 
-============
+boxee.scad
+==========
 Parametric storage box created in OpenSCAD
-
 
 Dependencies
 ------------

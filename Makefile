@@ -1,8 +1,8 @@
 PROJECT_NAME = [boxee.scad] Parametric storage box created in OpenSCAD
 PROJECT_COPYRIGHT = Copyright © 2026 by Conyx
 PROJECT_URL = https://github.com/conyx/boxee.scad
-PROJECT_LICENCE = CC BY-NC-SA 4.0
-PROJECT_LICENCE_URL = https://creativecommons.org/licenses/by-nc-sa/4.0/
+PROJECT_LICENCE = CC BY-SA 4.0
+PROJECT_LICENCE_URL = https://creativecommons.org/licenses/by-sa/4.0
 
 # Generates a single-file boxee.scad from main.scad by inlining all local
 # include files (non-BOSL2) at the /* [Hidden] */ marker, making the output
