@@ -4,8 +4,8 @@ Parametric storage box created in OpenSCAD
 
 Dependencies
 ------------
-  - [OpenSCAD](https://github.com/openscad/openscad)
-  - [BOSL2 library](https://github.com/BelfrySCAD/BOSL2)
+  - [OpenSCAD](https://openscad.org/downloads.html)
+  - [BOSL2 library](https://github.com/BelfrySCAD/BOSL2?tab=readme-ov-file#installation)
 
 Lid types
 ---------
