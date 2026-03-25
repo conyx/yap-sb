@@ -1,9 +1,15 @@
-[boxee.scad] Parametric storage box created in OpenSCAD
--------------------------------------------------------
-1) Dependencies
+[boxee.scad] 
+============
+Parametric storage box created in OpenSCAD
+
+
+Dependencies
+------------
   - [OpenSCAD](https://github.com/openscad/openscad)
   - [BOSL2 library](https://github.com/BelfrySCAD/BOSL2)
-2) Lid supports:
+
+Lid types
+---------
   - Magnets
   - Hinges
   - Latches
