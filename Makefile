@@ -1,15 +1,15 @@
-PROJECT_NAME = Yet another parametric storage box [YAP-SB]
+PROJECT_NAME = [boxee.scad] Parametric storage box created in OpenSCAD
 PROJECT_COPYRIGHT = Copyright © 2026 by Conyx
-PROJECT_URL = https://github.com/conyx/yap-sb
+PROJECT_URL = https://github.com/conyx/boxee.scad
 PROJECT_LICENCE = CC BY-NC-SA 4.0
 PROJECT_LICENCE_URL = https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-# Generates a single-file storagebox.scad from main.scad by inlining all local
+# Generates a single-file boxee.scad from main.scad by inlining all local
 # include files (non-BOSL2) at the /* [Hidden] */ marker, making the output
 # self-contained for sharing on [MakerWorld/Thingvers/Printables] platforms.
 .PHONY: unify
-unify: storagebox.scad
-storagebox.scad: main.scad
+unify: boxee.scad
+boxee.scad: main.scad
 	@awk ' \
 		BEGIN { \
 			print "// $(PROJECT_NAME)"; \
@@ -41,4 +41,4 @@ storagebox.scad: main.scad
 
 .PHONY: clean
 clean:
-	rm -f storagebox.scad main.stl
+	rm -f boxee.scad boxee.stl main.stl
