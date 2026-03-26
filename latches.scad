@@ -7,7 +7,7 @@ module latch_dovetail(is_male) {
            radius=latch_radius,
            slope = latch_slope,
            extra = is_male ? 0 : TINY,
-           $slop=latch_looseness_offset);
+           $slop=latch_tolerance);
 }
 
 module latch_hinge(is_male) {
@@ -28,8 +28,8 @@ module latch_hinge(is_male) {
 }
 
 module latch_female_support() {
-  latch_x_width_female = latch_x_width + latch_looseness_offset * 2;
-  latch_x_width_back_female = latch_x_width_back + latch_looseness_offset * 2;
+  latch_x_width_female = latch_x_width + latch_tolerance * 2;
+  latch_x_width_back_female = latch_x_width_back + latch_tolerance * 2;
   top_mount = [[0, 0],
                [0, latch_y_thickness],
                [(latch_x_width_outside - latch_x_width_back_female) / 2, latch_y_thickness],

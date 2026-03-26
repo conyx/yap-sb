@@ -1,8 +1,8 @@
 module hinge(is_box_hinge) {
-  screw_head_cut_h = hinge_screw_head_width + 2*hinge_screw_looseness_offset;
-  screw_head_cut_d = hinge_screw_head_diameter + 2*hinge_screw_looseness_offset;
-  screw_nut_cut_h = hinge_nut_width + 2*hinge_screw_looseness_offset;
-  screw_nut_cut_id = hinge_nut_size + 2*hinge_screw_looseness_offset;
+  screw_head_cut_h = hinge_screw_head_width + 2*hinge_screw_tolerance;
+  screw_head_cut_d = hinge_screw_head_diameter + 2*hinge_screw_tolerance;
+  screw_nut_cut_h = hinge_nut_width + 2*hinge_screw_tolerance;
+  screw_nut_cut_id = hinge_nut_size + 2*hinge_screw_tolerance;
 
   color(OUTSIDE_ACCESSORIES_COLOR)
   difference() {
@@ -60,18 +60,18 @@ module hinges() {
     }
 
     if (hinge_join_type == "screw_nut") {
-      screw_head_cut_diameter = hinge_screw_head_diameter + 2*hinge_screw_looseness_offset;
-      screw_nut_cut_diameter = (hinge_nut_size + 2*hinge_screw_looseness_offset) / cos(30);
+      screw_head_cut_diameter = hinge_screw_head_diameter + 2*hinge_screw_tolerance;
+      screw_nut_cut_diameter = (hinge_nut_size + 2*hinge_screw_tolerance) / cos(30);
 
       assert(hinge_knuckle_diameter >= screw_head_cut_diameter,
              str("hinge_knuckle_diameter is too small for screw head. ",
                  "Knuckle diameter: ", hinge_knuckle_diameter, "mm, ",
-                 "screw head diameter (with looseness): ", screw_head_cut_diameter, "mm"));
+                 "screw head diameter (with tolerance): ", screw_head_cut_diameter, "mm"));
 
       assert(hinge_knuckle_diameter >= screw_nut_cut_diameter,
              str("hinge_knuckle_diameter is too small for screw nut. ",
                  "Knuckle diameter: ", hinge_knuckle_diameter, "mm, ",
-                 "nut outer diameter (with looseness): ", screw_nut_cut_diameter, "mm"));
+                 "nut outer diameter (with tolerance): ", screw_nut_cut_diameter, "mm"));
     }
   }
 

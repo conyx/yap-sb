@@ -37,7 +37,7 @@ module lid() {
                   outer_rounding = lid_cut_out_rounding,
                   inner_rounding = MIN_CORNER_RADIUS,
                   bottom_rounding = 0,
-                  edge_extension = lp_thickness + lp_looseness_offset,
+                  edge_extension = lp_thickness + lp_tolerance,
                   mirror_x = true
                 );
               }

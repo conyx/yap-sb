@@ -47,8 +47,8 @@ module magnet_holders_box_pair(clearance) {
   magnet_holder_box_left_x_position = -((x_width_outside + box_x_margin)
                                        -magnet_holder_radius
                                        -thickness
-                                       -lp_looseness_offset);
-  magnet_holder_box_right_x_position = -(box_x_margin + magnet_holder_radius + thickness + lp_looseness_offset);
+                                       -lp_tolerance);
+  magnet_holder_box_right_x_position = -(box_x_margin + magnet_holder_radius + thickness + lp_tolerance);
   y_position = -y_depth/2 - lp_thickness + magnet_holder_radius;
   // When using hinges with 2 magnets, place both on the front side
   left_y_position = (generate_hinges && magnets_number == 2)
@@ -76,7 +76,7 @@ module magnet_holders_box(clearance = false) {
 module magnet_holder_lid(clearance) {
   xflip()
     magnet_holder(height = lid_height_outside - lp_height,
-                  wall_distance = magnet_holder_radius + lp_looseness_offset + magnet_holder_rounding_fix_offset,
+                  wall_distance = magnet_holder_radius + lp_tolerance + magnet_holder_rounding_fix_offset,
                   wall_rounding = lid_cut_out_rounding,
                   clearance = clearance);
 }
@@ -85,8 +85,8 @@ module magnet_holders_lid_pair(clearance) {
   magnet_holder_lid_right_x_position = (x_width_outside + lid_x_margin)
                                       -magnet_holder_radius
                                       -thickness
-                                      -lp_looseness_offset;
-  magnet_holder_lid_left_x_position = lid_x_margin + magnet_holder_radius + thickness + lp_looseness_offset;
+                                      -lp_tolerance;
+  magnet_holder_lid_left_x_position = lid_x_margin + magnet_holder_radius + thickness + lp_tolerance;
   y_position = -y_depth/2 -lp_thickness + magnet_holder_radius;
   // When using hinges with 2 magnets, place both on the front side
   right_y_position = (generate_hinges && magnets_number == 2)

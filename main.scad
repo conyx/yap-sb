@@ -75,8 +75,8 @@ lip_height = 5; // .5
 // Wall thickness of the lip.
 lip_thickness = 0.8; // .1
 
-// Lip outer dimension offset. The larger the number, the looser the friction fit.
-lip_looseness_offset = 0.15; // .05
+// Extra clearance added to lip dimensions. Increase if the lid fits too tightly. Decrease for more firm friction fit effect.
+lip_tolerance = 0.15; // [0:0.01:0.5]
 
 /* [Magnets] */
 
@@ -101,8 +101,8 @@ magnet_generate_closure = false;
 // Height of the magnet closure.
 magnet_closure_height = 0.45; // [0.1:0.05:1]
 
-// Magnet hole dimension offset. The larger the number, the looser the friction fit.
-magnet_looseness_offset = 0.15; // .05
+// Extra clearance added to magnet hole dimensions. Increase if magnets don't fit.
+magnet_tolerance = 0.15; // [0:0.01:0.5]
 
 /* [Hinges] */
 
@@ -166,8 +166,8 @@ hinge_nut_width = 1.8; // .1
 // Hinge screw nut size (i.e., the spanner/wrench size needed)
 hinge_nut_size = 4; // .1
 
-// Looseness offset for the screw head and nut. The larger the number, the looser the friction fit.
-hinge_screw_looseness_offset = 0.1; // .05
+// Extra clearance added to screw head and nut recesses. Increase if hardware doesn't fit.
+hinge_screw_tolerance = 0.1; // [0:0.01:0.5]
 
 /* [Hinges / self-tapping screw] */
 
@@ -212,8 +212,8 @@ latch_hinge_arm_angle = 45; // [30:1:90]
 // Gap between latch hinge segments
 latch_hinge_gap = 0.15; // .05
 
-// Latch dovetail dimension offset. The larger the number, the looser the fit.
-latch_looseness_offset = 0.1; // .05
+// Extra clearance added to latch dovetail dimensions. Increase if the latch is too tight.
+latch_tolerance = 0.1; // [0:0.01:0.5]
 
 /* [Slider lid] */
 
@@ -237,6 +237,9 @@ slider_lid_notches_spacing = 1; // .2
 
 // Whether to add snap-lock bumps that hold the lid closed
 slider_lid_snap_lock = true;
+
+// Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
+slider_lid_tolerance = 0.15; // [0:0.01:0.5]
 
 /* [Connection groove / bump] */
 
@@ -283,7 +286,7 @@ generate_connection = connection_type != "off" &&
 // Reset lip parameters if needed
 lp_height = generate_lip ? lip_height : 0;
 lp_thickness = generate_lip ? lip_thickness : 0;
-lp_looseness_offset = generate_lip ? lip_looseness_offset : 0;
+lp_tolerance = generate_lip ? lip_tolerance : 0;
 
 // Final margins from Y axis
 box_x_margin = 2;
@@ -299,14 +302,14 @@ _columns_size = max([for (row = compartments_grid)
 ]);
 x_width = compartments_transpose ? _rows_size : _columns_size;
 y_depth = compartments_transpose ? _columns_size : _rows_size;
-x_width_outside = x_width + thickness*2 + lp_thickness*2 + lp_looseness_offset*2;
-y_depth_outside = y_depth + thickness*2 + lp_thickness*2 + lp_looseness_offset*2;
+x_width_outside = x_width + thickness*2 + lp_thickness*2 + lp_tolerance*2;
+y_depth_outside = y_depth + thickness*2 + lp_thickness*2 + lp_tolerance*2;
 bottom_height_outside = bottom_height + thickness;
 box_height_inside = bottom_height + lp_height;
 box_height_outside = bottom_height_outside + lp_height;
 lid_height_outside = lid_type == "slider" ? slider_lid_thickness : lid_height + thickness;
 lip_rounding = max(MIN_CORNER_RADIUS,
-                   corner_outer_radius - thickness - lp_looseness_offset);
+                   corner_outer_radius - thickness - lp_tolerance);
 lid_cut_out_rounding = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness);
 
 // Hinges
@@ -314,7 +317,7 @@ hinge_knuckle_offset = hinge_knuckle_diameter / 2 + hinge_mount_gap;
 hinge_length = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_length + hinge_self_tap_screw_gap
   : hinge_join_type == "screw_nut"
-    ? hinge_screw_length + hinge_screw_head_width + 4*hinge_screw_looseness_offset
+    ? hinge_screw_length + hinge_screw_head_width + 4*hinge_screw_tolerance
     : hinge_join_type == "print_in_place"
       ? hinge_in_place_length
       : hinge_pin_length;
@@ -332,8 +335,8 @@ magnet_holder_rounding_fix_offset = max(
   0,
   ((sqrt(2) - 1) * (lip_rounding - magnet_holder_radius)) / sqrt(2)
 );
-magnet_hole_diameter = magnet_diameter + 2*magnet_looseness_offset;
-magnet_hole_height = magnet_height + magnet_glue_height + 2*magnet_looseness_offset;
+magnet_hole_diameter = magnet_diameter + 2*magnet_tolerance;
+magnet_hole_height = magnet_height + magnet_glue_height + 2*magnet_tolerance;
 
 // Connaction groove / bump
 connection_groove_diameter = connection_groove_percentage / 100 * thickness;

@@ -14,8 +14,8 @@ module box() {
 
           // Inner body that forms lip
           up(box_height_outside/2)
-            cuboid([x_width_outside - thickness*2 - lp_looseness_offset*2,
-                    y_depth_outside - thickness*2 - lp_looseness_offset*2,
+            cuboid([x_width_outside - thickness*2 - lp_tolerance*2,
+                    y_depth_outside - thickness*2 - lp_tolerance*2,
                     box_height_outside],
                    rounding = lip_rounding,
                    edges = "Z");
@@ -24,7 +24,7 @@ module box() {
         compartment_outer_rounding = max(
           MIN_CORNER_RADIUS,
           corner_inner_radius,
-          corner_outer_radius - thickness - lp_thickness - lp_looseness_offset
+          corner_outer_radius - thickness - lp_thickness - lp_tolerance
         );
 
         // Cut out inside
