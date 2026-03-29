@@ -30,7 +30,7 @@ module magnet_holder(height, wall_distance, wall_rounding, clearance) {
               -magnet_holder_rounding_fix_offset,
               holder_height - magnet_hole_height - (magnet_generate_closure ? magnet_closure_height : 0)])
           cylinder(d=magnet_hole_diameter,
-                   h=magnet_hole_height + (magnet_generate_closure ? 0 : SHIMMERING_WALL_OFFSET));
+                   h=magnet_hole_height + (magnet_generate_closure ? 0 : SWO));
       }
     }
 }

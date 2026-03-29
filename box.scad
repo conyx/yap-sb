@@ -45,7 +45,7 @@ module box() {
                 "Current value: ", separators_z_offset, "mm"));  
         
           up(box_height_outside - separators_z_offset)
-            cuboid([x_width, y_depth, separators_z_offset + SHIMMERING_WALL_OFFSET],
+            cuboid([x_width, y_depth, separators_z_offset + SWO],
                    rounding = compartment_outer_rounding,
                    edges = "Z",
                    anchor = BOTTOM);

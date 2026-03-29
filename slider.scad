@@ -1,5 +1,5 @@
 module slider_lid_base(is_clearance = false) {
-  h = slider_lid_thickness + (is_clearance ? SHIMMERING_WALL_OFFSET * 2 : 0);
+  h = slider_lid_thickness + (is_clearance ? SWO * 2 : 0);
   cuboid([x_width, y_depth, h],
          rounding = lid_cut_out_rounding,
          edges = "Z");
@@ -9,21 +9,21 @@ module slider_rail_base_part_mask(is_lid_part = false) {
   cut_x = x_width_outside
           - max(thickness, corner_outer_radius)
           - (is_lid_part ? 0 : slider_lid_tolerance);
-  mask_x_width = cut_x + SHIMMERING_WALL_OFFSET * 2;
-  mask_y_depth = y_depth_outside + SHIMMERING_WALL_OFFSET * 2;
-  mask_z_height = slider_lid_thickness + SHIMMERING_WALL_OFFSET * 2;
-  bevel_z_height = mask_z_height + SHIMMERING_WALL_OFFSET * 2;
-  bevel_y_depth = mask_y_depth + SHIMMERING_WALL_OFFSET * 2;
+  mask_x_width = cut_x + SWO * 2;
+  mask_y_depth = y_depth_outside + SWO * 2;
+  mask_z_height = slider_lid_thickness + SWO * 2;
+  bevel_z_height = mask_z_height + SWO * 2;
+  bevel_y_depth = mask_y_depth + SWO * 2;
   bevel_x_width = bevel_z_height * tan(30);
   
-  left((x_width_outside - mask_x_width) / 2 + SHIMMERING_WALL_OFFSET)
+  left((x_width_outside - mask_x_width) / 2 + SWO)
     difference() {
       cuboid([
         mask_x_width,
         mask_y_depth,
         mask_z_height
       ]);
-      right((mask_x_width - bevel_x_width) / 2 + SHIMMERING_WALL_OFFSET)
+      right((mask_x_width - bevel_x_width) / 2 + SWO)
       zrot(90)
         wedge(
           [
@@ -61,11 +61,11 @@ module slider_rail_base() {
 
 module slider_base(is_clearance = false) {
   grip = slider_lid_rail_grip / 100 * thickness;
-  h = slider_lid_thickness + (is_clearance ? SHIMMERING_WALL_OFFSET * 2 : 0);
+  h = slider_lid_thickness + (is_clearance ? SWO * 2 : 0);
   profile = [
-    [is_clearance ? -SHIMMERING_WALL_OFFSET : 0, 0],
+    [is_clearance ? -SWO : 0, 0],
     [grip, 0],
-    [is_clearance ? -SHIMMERING_WALL_OFFSET : 0, h]
+    [is_clearance ? -SWO : 0, h]
   ];
   path = rect([x_width, y_depth], rounding = lid_cut_out_rounding);
   down(h/2)
