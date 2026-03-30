@@ -1,3 +1,8 @@
+function get_slider_rail_base_cut_x(is_lid_part) =
+  get_x_width_outside()
+  - max(thickness, corner_outer_radius)
+  - (is_lid_part ? 0 : slider_lid_tolerance);
+
 module slider_lid_base(is_clearance = false) {
   h = slider_lid_thickness + (is_clearance ? SWO * 2 : 0);
   cuboid([get_x_width(), get_y_depth(), h],
@@ -5,14 +10,31 @@ module slider_lid_base(is_clearance = false) {
          edges = "Z");
 }
 
-module slider_rail_base_part_mask(is_lid_part = false) {
-  cut_x = get_x_width_outside()
-          - max(thickness, corner_outer_radius)
-          - (is_lid_part ? 0 : slider_lid_tolerance);
-  mask_x_width = cut_x + SWO * 2;
+module slider_rail_base_part_rounding_mask(is_lid_part) {
+  slider_rail_base_part_rounding = min(
+    slider_lid_thickness,
+    max(corner_outer_radius, thickness)
+  ) / 2;
+  up(slider_lid_thickness / 2)
+    right(
+      get_x_width_outside() / 2
+      - (get_x_width_outside() - get_slider_rail_base_cut_x(is_lid_part))
+      + (is_lid_part ? -1 : 1) * SWO
+    )
+      rounding_edge_mask(
+        height=get_y_depth_outside() + SWO,
+        r=slider_rail_base_part_rounding,
+        excess=SWO,
+        spin=is_lid_part ? 270 : 90,
+        orient=is_lid_part ? FRONT : BACK
+      );
+}
+
+module slider_rail_base_part_mask(is_lid_part) {
+  mask_x_width = get_slider_rail_base_cut_x(is_lid_part) + SWO * 2;
   mask_y_depth = get_y_depth_outside() + SWO * 2;
   mask_z_height = slider_lid_thickness + SWO * 2;
-  
+
   left((get_x_width_outside() - mask_x_width) / 2 + SWO)
     cuboid([
       mask_x_width,
@@ -21,16 +43,20 @@ module slider_rail_base_part_mask(is_lid_part = false) {
     ]);
 }
 
-module slider_rail_base_part(is_lid_part = false) {
+module slider_rail_base_part(is_lid_part) {
   if (is_lid_part) {
     difference() {
       slider_rail_base();
       slider_rail_base_part_mask(is_lid_part);
+      slider_rail_base_part_rounding_mask(is_lid_part);
     }
   } else {
-    intersection() {
-      slider_rail_base_part_mask(is_lid_part);
-      slider_rail_base();
+    difference() {
+      intersection() {
+        slider_rail_base_part_mask(is_lid_part);
+        slider_rail_base();
+      }
+      slider_rail_base_part_rounding_mask(is_lid_part);
     }
   }
 }
