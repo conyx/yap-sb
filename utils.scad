@@ -147,5 +147,11 @@ function get_latch_snap_lock_diameter_female() = 3;
 function get_latch_snap_lock_diameter_male() = get_latch_snap_lock_diameter_female() * 0.9;
 function get_latch_support_z_height() = latch_y_thickness * tan(90 - latch_support_angle);
 
+// Slider lid
+function get_slider_rail_base_cut_x(is_lid_part) =
+  get_x_width_outside()
+  - max(thickness, corner_outer_radius)
+  - (is_lid_part ? 0 : slider_lid_tolerance);
+
 // Lid notches
 function get_lid_notch_radius() = thickness / 2;

@@ -1,8 +1,3 @@
-function get_slider_rail_base_cut_x(is_lid_part) =
-  get_x_width_outside()
-  - max(thickness, corner_outer_radius)
-  - (is_lid_part ? 0 : slider_lid_tolerance);
-
 module slider_lid_base(is_clearance = false) {
   h = slider_lid_thickness + (is_clearance ? SWO * 2 : 0);
   cuboid([get_x_width(), get_y_depth(), h],
