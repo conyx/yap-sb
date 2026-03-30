@@ -8,20 +8,22 @@
 //   bottom_rounding - bottom edge radius (os_circle) for compartment floors
 //   edge_extension  - extra size added to edge compartments (those touching outer walls)
 //   mirror_x        - mirror compartment layout along X axis (lid has reversed X vs box)
-module compartments(height, z_offset, outer_rounding, inner_rounding, bottom_rounding, edge_extension, mirror_x = false) {
-  for (r = [0 : len(compartments_grid) - 1]) {
-    row = compartments_grid[r];
+module compartments(
+  height, z_offset, outer_rounding, inner_rounding, bottom_rounding, edge_extension, mirror_x = false
+) {
+  for (r = [0 : len(get_compartments_grid()) - 1]) {
+    row = get_compartments_grid()[r];
     row_primary = row[0];
     row_comps = row[1];
     num_comps = len(row_comps);
 
     comps_total = sum(row_comps) + (num_comps - 1) * separator_thickness;
-    last_comp_extension = (compartments_transpose ? y_depth : x_width) - comps_total;
+    last_comp_extension = (compartments_transpose ? get_y_depth() : get_x_width()) - comps_total;
 
-    prev_primaries = r > 0 ? sum([for (i = [0 : r-1]) compartments_grid[i][0]]) : 0;
+    prev_primaries = r > 0 ? sum([for (i = [0 : r-1]) get_compartments_grid()[i][0]]) : 0;
 
     is_first_row = (r == 0);
-    is_last_row = (r == len(compartments_grid) - 1);
+    is_last_row = (r == len(get_compartments_grid()) - 1);
 
     for (c = [0 : num_comps - 1]) {
       is_last_comp = (c == num_comps - 1);
@@ -36,12 +38,12 @@ module compartments(height, z_offset, outer_rounding, inner_rounding, bottom_rou
       comp_depth = compartments_transpose ? comp_size : row_primary;
 
       comp_center_x = compartments_transpose
-        ? -x_width/2 + prev_primaries + r * separator_thickness + row_primary/2
-        : -x_width/2 + prev_comps + c * separator_thickness + comp_size/2;
+        ? -get_x_width()/2 + prev_primaries + r * separator_thickness + row_primary/2
+        : -get_x_width()/2 + prev_comps + c * separator_thickness + comp_size/2;
 
       comp_center_y = compartments_transpose
-        ? y_depth/2 - prev_comps - c * separator_thickness - comp_size/2
-        : y_depth/2 - prev_primaries - r * separator_thickness - row_primary/2;
+        ? get_y_depth()/2 - prev_comps - c * separator_thickness - comp_size/2
+        : get_y_depth()/2 - prev_primaries - r * separator_thickness - row_primary/2;
 
       // Edge extensions: swap row/comp roles when transposed
       ext_left = (compartments_transpose ? is_first_row : is_first_comp) ? edge_extension : 0;
@@ -76,7 +78,7 @@ module compartments(height, z_offset, outer_rounding, inner_rounding, bottom_rou
           rect([final_width, final_depth], rounding = cutout_corner_rounding),
           height = height,
           bottom = os_circle(r = bottom_rounding),
-          steps = 4 + 4 * bottom_rounding * model_detail
+          steps = 4 + 4 * bottom_rounding * get_model_detail()
         );
     }
   }

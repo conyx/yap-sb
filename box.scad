@@ -3,33 +3,33 @@ module box() {
   color(BOX_COLOR)
   difference() {
     union() {
-      left(generate_lid ? x_width_outside/2 + box_x_margin : 0)
+      left(get_generate_lid() ? get_x_width_outside()/2 + get_box_x_margin() : 0)
       difference() {
         union() {
           // Outer body
-          up(bottom_height_outside/2)
-            cuboid([x_width_outside, y_depth_outside, bottom_height_outside],
+          up(get_bottom_height_outside()/2)
+            cuboid([get_x_width_outside(), get_y_depth_outside(), get_bottom_height_outside()],
                    rounding = corner_outer_radius,
                    edges = "Z");
 
           // Inner body that forms lip
-          up(box_height_outside/2)
-            cuboid([x_width_outside - thickness*2 - lp_tolerance*2,
-                    y_depth_outside - thickness*2 - lp_tolerance*2,
-                    box_height_outside],
-                   rounding = lip_rounding,
+          up(get_box_height_outside()/2)
+            cuboid([get_x_width_outside() - thickness*2 - get_lp_tolerance()*2,
+                    get_y_depth_outside() - thickness*2 - get_lp_tolerance()*2,
+                    get_box_height_outside()],
+                   rounding = get_lip_rounding(),
                    edges = "Z");
         }
 
         compartment_outer_rounding = max(
           MIN_CORNER_RADIUS,
           corner_inner_radius,
-          corner_outer_radius - thickness - lp_thickness - lp_tolerance
+          corner_outer_radius - thickness - get_lp_thickness() - get_lp_tolerance()
         );
 
         // Cut out inside
         compartments(
-          height = box_height_outside,
+          height = get_box_height_outside(),
           z_offset = thickness,
           outer_rounding = compartment_outer_rounding,
           inner_rounding = max(MIN_CORNER_RADIUS, corner_inner_radius),
@@ -39,13 +39,13 @@ module box() {
 
         // Cut out separator Z offset from the top
         if (separators_z_offset > 0) {
-          assert(separators_z_offset <= bottom_height + lp_height,
+          assert(separators_z_offset <= bottom_height + get_lp_height(),
             str("separators_z_offset must be less than bottom_height (+ lip_height if lip used) (= ",
-                bottom_height + lp_height, "mm). ",
+                bottom_height + get_lp_height(), "mm). ",
                 "Current value: ", separators_z_offset, "mm"));  
         
-          up(box_height_outside - separators_z_offset)
-            cuboid([x_width, y_depth, separators_z_offset + SWO],
+          up(get_box_height_outside() - separators_z_offset)
+            cuboid([get_x_width(), get_y_depth(), separators_z_offset + SWO],
                    rounding = compartment_outer_rounding,
                    edges = "Z",
                    anchor = BOTTOM);

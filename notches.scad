@@ -1,30 +1,30 @@
 // Single lid notch shape
 module lid_notch(dimension, z_position, near) {
-  lid_notch_half_length = (dimension == "x" ? x_width_outside : y_depth_outside) / PHI / 2;
-  move([dimension == "y" ? (x_width_outside / 2 * (near ? -1 : 1)) : 0,
-        dimension == "x" ? (y_depth_outside / 2 * (near ? -1 : 1)) : 0,
-        -lid_height_outside/4 + z_position])
+  lid_notch_half_length = (dimension == "x" ? get_x_width_outside() : get_y_depth_outside()) / PHI / 2;
+  move([dimension == "y" ? (get_x_width_outside() / 2 * (near ? -1 : 1)) : 0,
+        dimension == "x" ? (get_y_depth_outside() / 2 * (near ? -1 : 1)) : 0,
+        -get_lid_height_outside()/4 + z_position])
   xrot(dimension == "y" ? 90 : 0)
   yrot(dimension == "x" ? 90 : 0)
     hull() {
-      up(lid_notch_half_length) sphere(r = lid_notch_radius);
-      down(lid_notch_half_length) sphere(r = lid_notch_radius);
+      up(lid_notch_half_length) sphere(r = get_lid_notch_radius());
+      down(lid_notch_half_length) sphere(r = get_lid_notch_radius());
     }
 }
 
 // Main notches module - generates all notch cutouts for the lid
 module notches() {
-  z_position_offset = (lid_height_outside / 2
-                       - (lid_notches_number * lid_notch_radius * 2)
+  z_position_offset = (get_lid_height_outside() / 2
+                       - (lid_notches_number * get_lid_notch_radius() * 2)
                        - ((lid_notches_number - 1) * lid_notches_spacing))
-                      / 2 + lid_notch_radius;
+                      / 2 + get_lid_notch_radius();
   for (n = [0 : lid_notches_number - 1]) {
-    z_position = n * (lid_notch_radius * 2 + lid_notches_spacing);
+    z_position = n * (get_lid_notch_radius() * 2 + lid_notches_spacing);
     if (lid_notches == "x" || lid_notches == "all") {
-      if (!generate_latches) {
+      if (!get_generate_latches()) {
         lid_notch("x", z_position_offset + z_position, true);
       }
-      if (!generate_hinges && !generate_latches_back) {
+      if (!get_generate_hinges() && !get_generate_latches_back()) {
         lid_notch("x", z_position_offset + z_position, false);
       }
     }

@@ -3,28 +3,28 @@ module summary() {
   // Column 1: Outside dimensions
   col1 = concat(
     ["Outside dimensions:",
-     str("X (width): ", x_width_outside, "mm"),
-     str("Y (depth): ", y_depth_outside, "mm")],
-    generate_hinges || generate_latches
+     str("X (width): ", get_x_width_outside(), "mm"),
+     str("Y (depth): ", get_y_depth_outside(), "mm")],
+    get_generate_hinges() || get_generate_latches()
       ? [str("Y (depth) w/ hinges",
              ": ",
-             y_depth_outside
-               + (generate_hinges ? (hinge_mount_gap + hinge_knuckle_diameter) : 0)
-               + (generate_latches ? latch_hinge_diameter : 0)
-               + (generate_latches_back ? latch_hinge_diameter : 0),
+             get_y_depth_outside()
+               + (get_generate_hinges() ? (hinge_mount_gap + hinge_knuckle_diameter) : 0)
+               + (get_generate_latches() ? get_latch_hinge_diameter() : 0)
+               + (get_generate_latches_back() ? get_latch_hinge_diameter() : 0),
              "mm")]
       : [],
     [str(lid_type == "slider" ? "Z (height) box (w/o slider rail): " : "Z (height) box: ",
-         box_height_outside,
+         get_box_height_outside(),
          "mm")],
-    generate_lid
-      ? [str("Z (height) lid: ", lid_height_outside, "mm"),
-         str("Z (height) overall: ", box_height_outside + lid_height_outside, "mm")]
+    get_generate_lid()
+      ? [str("Z (height) lid: ", get_lid_height_outside(), "mm"),
+         str("Z (height) overall: ", get_box_height_outside() + get_lid_height_outside(), "mm")]
       : []
   );
 
   // Column 2: Magnets
-  col2 = generate_magnets
+  col2 = get_generate_magnets()
     ? ["Magnets:",
        str("Count: ", magnets_number),
        str("Diameter: ", magnet_diameter, "mm"),
@@ -32,7 +32,7 @@ module summary() {
     : [];
 
   // Column 3: Hinges
-  col3 = generate_hinges && hinge_join_type != "print_in_place"
+  col3 = get_generate_hinges() && hinge_join_type != "print_in_place"
     ? concat(
         ["Hinges:"],
         hinge_join_type == "screw_nut"
@@ -49,13 +49,13 @@ module summary() {
                str("Screw length (incl. head): ", hinge_self_tap_screw_length, "mm")]
             : [str("Pins needed: ", hinges_number),
                str("Diameter: ", hinge_pin_diameter, "mm"),
-               str("Length: ", hinge_length, "mm")])
+               str("Length: ", get_hinge_length(), "mm")])
     : [];
 
   // Column 4: Printing pause (magnet closure)
-  box_pause = box_height_outside - magnet_closure_height;
-  lid_pause = lid_height_outside - lp_height - magnet_closure_height;
-  col4 = (generate_magnets && magnet_generate_closure)
+  box_pause = get_box_height_outside() - magnet_closure_height;
+  lid_pause = get_lid_height_outside() - get_lp_height() - magnet_closure_height;
+  col4 = (get_generate_magnets() && magnet_generate_closure)
     ? ["Pause printing to insert magnets:",
        str("Box: AFTER Z layer: <", box_pause, ">mm"),
        str("Lid: AFTER Z layer: <", lid_pause, ">mm")]
@@ -67,12 +67,12 @@ module summary() {
 
   // Summary plate
   if (generate_summary_plate && $preview) {
-    padding = x_width_outside / 40;
+    padding = get_x_width_outside() / 40;
     text_plate_width = max(
-      (generate_lid
-        ? 2 * x_width_outside + box_x_margin + lid_x_margin
-        : x_width_outside) - 2 * padding,
-      y_depth_outside
+      (get_generate_lid()
+        ? 2 * get_x_width_outside() + get_box_x_margin() + get_lid_x_margin()
+        : get_x_width_outside()) - 2 * padding,
+      get_y_depth_outside()
     );
     font_size = (1 / 80) * text_plate_width;
     line_height = font_size * 1.5;
@@ -81,7 +81,7 @@ module summary() {
     text_x = - text_plate_width / 2;
 
     // 15 units in front of the box (-Y direction)
-    text_y = -(y_depth_outside / 2) - 15;
+    text_y = -(get_y_depth_outside() / 2) - 15;
 
     // Columns X positions
     col1_x = text_x;

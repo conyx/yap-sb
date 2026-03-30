@@ -6,11 +6,11 @@ module hinge(is_box_hinge) {
 
   color(OUTSIDE_ACCESSORIES_COLOR)
   difference() {
-    knuckle_hinge(length = hinge_length,
+    knuckle_hinge(length = get_hinge_length(),
                   segs = hinge_segments,
-                  offset = hinge_knuckle_offset,
+                  offset = get_hinge_knuckle_offset(),
                   knuckle_diam = hinge_knuckle_diameter,
-                  pin_diam = hinge_hole_diameter,
+                  pin_diam = get_hinge_hole_diameter(),
                   screw_head = "flat",
                   tap_depth = hinge_self_tap_screw_tap_depth,
                   in_place = hinge_join_type == "print_in_place",
@@ -24,7 +24,7 @@ module hinge(is_box_hinge) {
 
     // Screw head/nut hole in first segment
     if (hinge_join_type == "screw_nut") {
-      x_offset = hinge_length/2 - screw_head_cut_h/2 + SWO/2;
+      x_offset = get_hinge_length()/2 - screw_head_cut_h/2 + SWO/2;
       y_offset = hinge_knuckle_diameter/2 + hinge_mount_gap;
       odd_segments = hinge_segments % 2 == 1;
 
@@ -47,11 +47,11 @@ module hinge(is_box_hinge) {
 
 module hinges() {
   // Hinge-related assertions (only when hinges are used)
-  if (generate_hinges) {
-    assert(hinges_number * hinge_length <= x_width_outside,
+  if (get_generate_hinges()) {
+    assert(hinges_number * get_hinge_length() <= get_x_width_outside(),
            str("Total hinge length exceeds box width. ",
-               "Total hinge length: ", hinges_number * hinge_length, "mm, ",
-               "box width: ", x_width_outside, "mm"));
+               "Total hinge length: ", hinges_number * get_hinge_length(), "mm, ",
+               "box width: ", get_x_width_outside(), "mm"));
 
     if (hinge_join_type == "print_in_place") {
       assert(hinge_segments >= 3,
@@ -75,24 +75,24 @@ module hinges() {
     }
   }
 
-  if (generate_hinges) {
+  if (get_generate_hinges()) {
     // Calculate spacing for equal distribution along X axis
-    hinge_spacing = (x_width_outside - hinges_number * hinge_length) / (hinges_number + 1);
+    hinge_spacing = (get_x_width_outside() - hinges_number * get_hinge_length()) / (hinges_number + 1);
 
-    box_center_x = -(x_width_outside/2 + box_x_margin);
-    lid_center_x = x_width_outside/2 + lid_x_margin;
-    hinge_y = y_depth_outside/2;
+    box_center_x = -(get_x_width_outside()/2 + get_box_x_margin());
+    lid_center_x = get_x_width_outside()/2 + get_lid_x_margin();
+    hinge_y = get_y_depth_outside()/2;
 
     for (i = [0 : hinges_number - 1]) {
-      hinge_x_offset = (i + 1) * hinge_spacing + (i + 0.5) * hinge_length - x_width_outside/2;
+      hinge_x_offset = (i + 1) * hinge_spacing + (i + 0.5) * get_hinge_length() - get_x_width_outside()/2;
 
       // Box hinge at top of box
-      move([box_center_x + hinge_x_offset, hinge_y, box_height_outside])
+      move([box_center_x + hinge_x_offset, hinge_y, get_box_height_outside()])
       mirror([hinge_flip_last && i == 0 ? 1 : 0, 0, 0])
         hinge(is_box_hinge = true);
 
       // Lid hinge at top of lid
-      move([lid_center_x + hinge_x_offset, hinge_y, lid_height_outside])
+      move([lid_center_x + hinge_x_offset, hinge_y, get_lid_height_outside()])
       mirror([hinge_flip_last && i == hinges_number - 1 ? 1 : 0, 0, 0])
         hinge(is_box_hinge = false);
     }

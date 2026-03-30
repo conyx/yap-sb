@@ -2,47 +2,49 @@ module latch_dovetail(is_male) {
   dovetail(is_male? "male" : "female",
            slide=latch_y_thickness,
            width=latch_x_width,
-           back_width=latch_x_width_back,
+           back_width=get_latch_x_width_back(),
            height=latch_z_height,
-           radius=latch_radius,
-           slope = latch_slope,
+           radius=get_latch_radius(),
+           slope = get_latch_slope(),
            extra = is_male ? 0 : TINY,
            $slop=latch_tolerance);
 }
 
 module latch_hinge(is_male) {
-  knuckle_hinge(length = latch_x_width_outside,
+  knuckle_hinge(length = get_latch_x_width_outside(),
                 segs = 3,
-                offset = latch_hinge_diameter / 2,
-                knuckle_diam = latch_hinge_diameter,
+                offset = get_latch_hinge_diameter() / 2,
+                knuckle_diam = get_latch_hinge_diameter(),
                 gap = latch_hinge_gap,
                 clear_top=true,
                 inner = is_male,
                 in_place=true,
-                pin_diam = in_place_knuckle_hinge_pin_diam(latch_hinge_diameter),
+                pin_diam = in_place_knuckle_hinge_pin_diam(get_latch_hinge_diameter()),
                 arm_angle = is_male ? 90 : latch_hinge_arm_angle,
-                seg_ratio = latch_inner_hinge_segment_width /
-                            ((latch_x_width_outside - latch_inner_hinge_segment_width) / 2),
+                seg_ratio = get_latch_inner_hinge_segment_width()
+                            / ((get_latch_x_width_outside() - get_latch_inner_hinge_segment_width()) / 2),
                 orient = is_male ? BOTTOM : FRONT
   );
 }
 
 module latch_female_support() {
   latch_x_width_female = latch_x_width + latch_tolerance * 2;
-  latch_x_width_back_female = latch_x_width_back + latch_tolerance * 2;
+  latch_x_width_back_female = get_latch_x_width_back() + latch_tolerance * 2;
   top_mount = [[0, 0],
                [0, latch_y_thickness],
-               [(latch_x_width_outside - latch_x_width_back_female) / 2, latch_y_thickness],
-               [(latch_x_width_outside - latch_x_width_female) / 2, 0]];
+               [(get_latch_x_width_outside() - latch_x_width_back_female) / 2, latch_y_thickness],
+               [(get_latch_x_width_outside() - latch_x_width_female) / 2, 0]];
   bottom_mount = [[0, latch_y_thickness - TINY],
                   [0, latch_y_thickness],
-                  [(latch_x_width_outside - latch_x_width_female) / 2, latch_y_thickness],
-                  [(latch_x_width_outside - latch_x_width_female) / 2, latch_y_thickness - TINY]];
-  skin([bottom_mount, top_mount], z=[0,latch_support_z_height], slices=$fn);
+                  [(get_latch_x_width_outside() - latch_x_width_female) / 2, latch_y_thickness],
+                  [(get_latch_x_width_outside() - latch_x_width_female) / 2, latch_y_thickness - TINY]];
+  skin([bottom_mount, top_mount], z=[0,get_latch_support_z_height()], slices=$fn);
 }
 
 module latch_female_support_left() {
-  move([-latch_x_width_outside / 2, -latch_y_thickness / 2, -latch_support_z_height - latch_z_height / 2])
+  move([-get_latch_x_width_outside() / 2,
+        -latch_y_thickness / 2,
+        -get_latch_support_z_height() - latch_z_height / 2])
     latch_female_support();
 }
 
@@ -56,22 +58,22 @@ module latch_female_supports() {
 }
 
 module latch_notch() {
-  move([0, latch_notch_y_depth / 2, latch_z_height - latch_notch_z_height / 2])
+  move([0, get_latch_notch_y_depth() / 2, latch_z_height - get_latch_notch_z_height() / 2])
         cuboid([latch_x_width,
-                latch_notch_y_depth + TINY,
-                latch_notch_z_height + TINY]);
+                get_latch_notch_y_depth() + TINY,
+                get_latch_notch_z_height() + TINY]);
 }
 
 module latch_snap_lock(is_male) {
-  diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
+  diameter = is_male ? get_latch_snap_lock_diameter_male() : get_latch_snap_lock_diameter_female();
   sphere(d = diameter);
 }
 
 module latch_snap_lock_right(is_male) {
-  diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
-  z_offset = latch_notch_z_height + latch_snap_lock_diameter_female / 2;
-  x_offset = z_offset / latch_slope + (diameter / 2) * (0.75 - 0.5 * latch_snap_lock_firmness);
-  move([mean([latch_x_width, latch_x_width_back]) / 2 - x_offset,
+  diameter = is_male ? get_latch_snap_lock_diameter_male() : get_latch_snap_lock_diameter_female();
+  z_offset = get_latch_notch_z_height() + get_latch_snap_lock_diameter_female() / 2;
+  x_offset = z_offset / get_latch_slope() + (diameter / 2) * (0.75 - 0.5 * latch_snap_lock_firmness);
+  move([mean([latch_x_width, get_latch_x_width_back()]) / 2 - x_offset,
         0,
         latch_z_height - z_offset])
     latch_snap_lock(is_male);
@@ -109,7 +111,7 @@ module latch_box() {
       up(latch_z_height / 2) xrot(180) {
         xrot(-90)
           diff("female_dovetail")
-            cuboid([latch_x_width_outside, latch_z_height, latch_y_thickness]) {
+            cuboid([get_latch_x_width_outside(), latch_z_height, latch_y_thickness]) {
               tag("female_dovetail")
                 attach(FRONT)
                   latch_dovetail(false);
@@ -125,33 +127,38 @@ module latch_box() {
 
 module latches_front() {
   // Calculate spacing for equal distribution along X axis
-  latch_spacing = (x_width_outside - latches_number * latch_x_width_outside) / (latches_number + 1);
+  latch_spacing = (get_x_width_outside() - latches_number * get_latch_x_width_outside())
+                  / (latches_number + 1);
   
-  box_center_x = -(x_width_outside/2 + box_x_margin);
-  lid_center_x = x_width_outside/2 + latch_margin;
-  latch_y = -y_depth_outside/2;
+  box_center_x = -(get_x_width_outside()/2 + get_box_x_margin());
+  lid_center_x = get_x_width_outside()/2 + get_latch_margin();
+  latch_y = -get_y_depth_outside()/2;
   
   color(OUTSIDE_ACCESSORIES_COLOR)
     for (i = [0 : latches_number - 1]) {
-      latch_x_offset = (i + 1) * latch_spacing + (i + 0.5) * latch_x_width_outside - x_width_outside/2;
+      latch_x_offset = (i + 1) * latch_spacing
+                       + (i + 0.5) * get_latch_x_width_outside()
+                       - get_x_width_outside()/2;
 
       // Latch box on front-top of box (Z offset by hinge diameter)
       move([box_center_x + latch_x_offset,
             latch_y - latch_y_thickness/2,
-            bottom_height_outside - latch_z_height - latch_hinge_diameter/2])
+            get_bottom_height_outside() - latch_z_height - get_latch_hinge_diameter()/2])
         latch_box();
 
       // Latch lid hinge on front-top of lid
       move([lid_center_x + latch_x_offset,
             latch_y,
-            lid_height_outside])
+            get_lid_height_outside()])
         latch_lid_hinge();
 
       // Separate latch lid parts next to the lid (right of lid)
-      move([x_width_outside + latch_margin + latch_margin
+      move([get_x_width_outside()
+              + get_latch_margin()
+              + get_latch_margin()
               + latch_x_width/2
-              + i * (latch_x_width + latch_margin),
-            -latch_y_thickness - latch_margin,
+              + i * (latch_x_width + get_latch_margin()),
+            -latch_y_thickness - get_latch_margin(),
             latch_y_thickness / 2])
         latch_lid();
     }
@@ -162,14 +169,14 @@ module latches_back() {
 }
 
 module latches() {
-  if (generate_latches) {
-    assert(latches_number * latch_x_width_outside <= x_width_outside,
+  if (get_generate_latches()) {
+    assert(latches_number * get_latch_x_width_outside() <= get_x_width_outside(),
            str("Total latch width exceeds box width. ",
-               "Total latch width: ", latches_number * latch_x_width_outside, "mm, ",
-               "box width: ", x_width_outside, "mm"));
+               "Total latch width: ", latches_number * get_latch_x_width_outside(), "mm, ",
+               "box width: ", get_x_width_outside(), "mm"));
 
     latches_front();
-    if (generate_latches_back) {
+    if (get_generate_latches_back()) {
       latches_back();
     }
   }
