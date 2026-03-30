@@ -63,17 +63,17 @@ module latch_notch() {
 }
 
 module latch_snap_lock(is_male) {
-  _diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
-  sphere(d = _diameter);
+  diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
+  sphere(d = diameter);
 }
 
 module latch_snap_lock_right(is_male) {
-  _diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
-  _z_offset = latch_notch_z_height + latch_snap_lock_diameter_female / 2;
-  _x_offset = _z_offset / latch_slope + (_diameter / 2) * (0.75 - 0.5 * latch_snap_lock_firmness);
-  move([mean([latch_x_width, latch_x_width_back]) / 2 - _x_offset,
+  diameter = is_male ? latch_snap_lock_diameter_male : latch_snap_lock_diameter_female;
+  z_offset = latch_notch_z_height + latch_snap_lock_diameter_female / 2;
+  x_offset = z_offset / latch_slope + (diameter / 2) * (0.75 - 0.5 * latch_snap_lock_firmness);
+  move([mean([latch_x_width, latch_x_width_back]) / 2 - x_offset,
         0,
-        latch_z_height - _z_offset])
+        latch_z_height - z_offset])
     latch_snap_lock(is_male);
 }
 

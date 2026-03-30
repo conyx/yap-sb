@@ -1,7 +1,7 @@
 // Connection bump / groove modules
 // Bump is the smaller protrusion, groove is the larger channel that receives it.
 
-module _connection_sweep(diameter) {
+module connection_sweep(diameter) {
   path_sweep2d(
     circle(d = diameter),
     rect([x_width_outside - thickness, y_depth_outside - thickness],
@@ -26,7 +26,7 @@ module connection_box(type) {
   if (should_render) {
     left(generate_lid ? x_width_outside/2 + box_x_margin : 0)
     up(bottom_height_outside)
-      _connection_sweep(type == "bump" ? connection_bump_diameter : connection_groove_diameter);
+      connection_sweep(type == "bump" ? connection_bump_diameter : connection_groove_diameter);
   }
 }
 
@@ -39,6 +39,6 @@ module connection_lid(type) {
 
   if (should_render) {
     move([x_width_outside/2 + lid_x_margin, 0, lid_height_outside])
-      _connection_sweep(type == "bump" ? connection_bump_diameter : connection_groove_diameter);
+      connection_sweep(type == "bump" ? connection_bump_diameter : connection_groove_diameter);
   }
 }

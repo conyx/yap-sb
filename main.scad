@@ -294,14 +294,14 @@ lid_x_margin = 2;
 latch_margin = 2;
 
 // Compute row/column totals, then assign based on transpose
-_rows_size = sum([for (row = compartments_grid) row[0]])
+rows_size = sum([for (row = compartments_grid) row[0]])
              + (len(compartments_grid) - 1) * separator_thickness;
-_columns_size = max([for (row = compartments_grid)
+columns_size = max([for (row = compartments_grid)
   let(widths = row[1], n = len(widths))
   sum(widths) + (n - 1) * separator_thickness
 ]);
-x_width = compartments_transpose ? _rows_size : _columns_size;
-y_depth = compartments_transpose ? _columns_size : _rows_size;
+x_width = compartments_transpose ? rows_size : columns_size;
+y_depth = compartments_transpose ? columns_size : rows_size;
 x_width_outside = x_width + thickness*2 + lp_thickness*2 + lp_tolerance*2;
 y_depth_outside = y_depth + thickness*2 + lp_thickness*2 + lp_tolerance*2;
 bottom_height_outside = bottom_height + thickness;
