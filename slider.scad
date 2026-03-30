@@ -12,28 +12,13 @@ module slider_rail_base_part_mask(is_lid_part = false) {
   mask_x_width = cut_x + SWO * 2;
   mask_y_depth = y_depth_outside + SWO * 2;
   mask_z_height = slider_lid_thickness + SWO * 2;
-  bevel_z_height = mask_z_height + SWO * 2;
-  bevel_y_depth = mask_y_depth + SWO * 2;
-  bevel_x_width = bevel_z_height * tan(30);
   
   left((x_width_outside - mask_x_width) / 2 + SWO)
-    difference() {
-      cuboid([
-        mask_x_width,
-        mask_y_depth,
-        mask_z_height
-      ]);
-      right((mask_x_width - bevel_x_width) / 2 + SWO)
-      zrot(90)
-        wedge(
-          [
-            bevel_y_depth,
-            bevel_x_width,
-            bevel_z_height
-          ],
-          center=true
-        );
-    }
+    cuboid([
+      mask_x_width,
+      mask_y_depth,
+      mask_z_height
+    ]);
 }
 
 module slider_rail_base_part(is_lid_part = false) {
