@@ -74,13 +74,19 @@ module slider_base(is_clearance = false) {
   grip = slider_lid_rail_grip / 100 * thickness;
   h = slider_lid_thickness + (is_clearance ? SWO * 2 : 0);
   profile = [
-    [is_clearance ? -SWO : 0, 0],
+    [0, 0],
     [grip, 0],
-    [is_clearance ? -SWO : 0, h]
+    [0, h]
+  ];
+  profile_clearance = [
+    [-SWO, 0],
+    [slider_lid_tolerance + grip, 0],
+    [slider_lid_tolerance, h],
+    [-SWO, h]
   ];
   path = rect([get_x_width(), get_y_depth()], rounding = get_lid_cut_out_rounding());
   down(h/2)
-    path_sweep2d(profile, path, closed = true);
+    path_sweep2d(is_clearance ? profile_clearance : profile, path, closed = true);
 }
 
 module slider_lid() {
