@@ -28,14 +28,14 @@ module hinge(is_box_hinge) {
       y_offset = hinge_knuckle_diameter/2 + hinge_mount_gap;
       odd_segments = hinge_segments % 2 == 1;
 
-        if (f_xor(is_box_hinge, odd_segments)) {
+        if (f_xor(!is_box_hinge, odd_segments)()) {
           move([x_offset * (is_box_hinge ? -1 : 1), y_offset, 0])
-          regular_prism(
-            6,
-            h = screw_nut_cut_h + SWO,
-            id = screw_nut_cut_id,
-            orient = RIGHT
-          );
+            regular_prism(
+              6,
+              h = screw_nut_cut_h + SWO,
+              id = screw_nut_cut_id,
+              orient = RIGHT
+            );
         }
 
         if (is_box_hinge) {
