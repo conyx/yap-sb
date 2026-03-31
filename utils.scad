@@ -1,8 +1,24 @@
-function in_place_knuckle_hinge_pin_diam(knuckle_diam) =
-  knuckle_diam >= 5
-    ? knuckle_diam - 1
-    : knuckle_diam * 0.8;
+// Main
+function get_model_detail() = $preview ? model_detail_preview : model_detail_stl;
 
+// Modules
+module cosine_polygon(y_size, periods) {
+  steps = 100 * periods * get_model_detail();
+  degrees = periods * 360;
+  y_aplitude = y_size / 2;
+  x_size = periods * 2 * PI * y_aplitude;
+  cosine_polygon_points = [
+      for (i = [0:steps])
+        let(x = i * x_size / steps, degree = i * degrees / steps)
+          [x, cos(degree) * y_aplitude],
+      [x_size, -y_aplitude],
+      [0, -y_aplitude]
+  ];
+  polygon(cosine_polygon_points);
+}
+
+// Compartments
+function get_compartments_grid() = parse_compartments_grid(compartments_dimensions);
 function parse_compartments_grid(compartments_flat) =
   let(
     a1 = assert(len(compartments_flat) >= 2,
@@ -39,10 +55,6 @@ function parse_compartments_grid(compartments_flat) =
     )
     [depth, widths]
   ];
-
-function get_model_detail() = $preview ? model_detail_preview : model_detail_stl;
-
-function get_compartments_grid() = parse_compartments_grid(compartments_dimensions);
 
 // Derived flags
 function get_generate_lid() = lid_type != "no_lid";
@@ -115,8 +127,12 @@ function get_hinge_hole_diameter() = hinge_join_type == "screw_self_tap"
   : hinge_join_type == "screw_nut"
     ? hinge_screw_diameter
     : hinge_join_type == "print_in_place"
-      ? in_place_knuckle_hinge_pin_diam(hinge_knuckle_diameter)
+      ? get_in_place_knuckle_hinge_pin_diam(hinge_knuckle_diameter)
       : hinge_pin_diameter;
+function get_in_place_knuckle_hinge_pin_diam(knuckle_diam) =
+  knuckle_diam >= 5
+    ? knuckle_diam - 1
+    : knuckle_diam * 0.8;
 
 // Magnets
 function get_magnet_holder_radius() = magnet_holder_diameter/2;

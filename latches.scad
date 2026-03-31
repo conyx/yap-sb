@@ -19,7 +19,7 @@ module latch_hinge(is_male) {
                 clear_top=true,
                 inner = is_male,
                 in_place=true,
-                pin_diam = in_place_knuckle_hinge_pin_diam(get_latch_hinge_diameter()),
+                pin_diam = get_in_place_knuckle_hinge_pin_diam(get_latch_hinge_diameter()),
                 arm_angle = is_male ? 90 : latch_hinge_arm_angle,
                 seg_ratio = get_latch_inner_hinge_segment_width()
                             / ((get_latch_x_width_outside() - get_latch_inner_hinge_segment_width()) / 2),
