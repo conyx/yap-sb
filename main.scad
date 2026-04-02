@@ -238,6 +238,9 @@ slider_lid_notches_spacing = 1; // .2
 // Whether to add snap-lock bumps that hold the lid closed
 slider_lid_snap_lock = true;
 
+// How firmly the snap lock holds (0 = loosest, 1 = firmest). Higher values produce larger bumps.
+slider_lid_snap_lock_firmness = 0.5; // [0:0.05:1]
+
 // Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
 slider_lid_tolerance = 0.15; // [0:0.01:0.5]
 
