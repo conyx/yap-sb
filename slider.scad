@@ -16,13 +16,22 @@ module slider_rail_base_part_rounding_mask(is_lid_part) {
       - (get_x_width_outside() - get_slider_rail_base_cut_x(is_lid_part))
       + (is_lid_part ? -1 : 1) * SWO
     )
-      rounding_edge_mask(
-        height=get_y_depth_outside() + SWO,
-        r=slider_rail_base_part_rounding,
-        excess=SWO,
-        spin=is_lid_part ? 270 : 90,
-        orient=is_lid_part ? FRONT : BACK
-      );
+      difference() {
+        rounding_edge_mask(
+          height=get_y_depth_outside() + SWO,
+          r=slider_rail_base_part_rounding,
+          excess=SWO,
+          spin=is_lid_part ? 270 : 90,
+          orient=is_lid_part ? FRONT : BACK
+        );
+        if (is_lid_part) {
+          cuboid([
+            slider_rail_base_part_rounding * 4,
+            get_y_depth(),
+            slider_lid_thickness * 2
+          ]);
+        }
+      }
 }
 
 module slider_rail_base_part_mask(is_lid_part) {
@@ -66,7 +75,7 @@ module slider_rail_base() {
 }
 
 module slider_base(is_clearance = false) {
-  grip = slider_lid_rail_grip / 100 * thickness;
+  grip = get_slider_lid_grip();
   h = slider_lid_thickness + (is_clearance ? SWO * 2 : 0);
   profile = [
     [0, 0],
@@ -84,19 +93,75 @@ module slider_base(is_clearance = false) {
     path_sweep2d(is_clearance ? profile_clearance : profile, path, closed = true);
 }
 
+module slider_rail_snap_lock_front() {
+  if (slider_lid_snap_lock) {
+    // TODO
+  }
+}
+
+module slider_rail_snap_lock_back() {
+  yflip() slider_rail_snap_lock_front();
+}
+
+module slider_rail_snap_lock() {
+  union() {
+    slider_rail_snap_lock_front();
+    slider_rail_snap_lock_back();
+  }
+}
+
+module slider_base_snap_lock_clearance_front() {
+  if (slider_lid_snap_lock) {
+    grip = get_slider_lid_grip();
+    snap_lock_size = get_slider_lid_snap_lock_size();
+    clearance_height = slider_lid_thickness * 2;
+    move([
+      - get_x_width() / 2 + get_lid_cut_out_rounding() - SWO,
+      - get_y_depth() / 2 - grip + snap_lock_size / 2 - SWO,
+      - slider_lid_thickness
+    ]) {
+      right(SWO)
+        cuboid(
+          [max(grip, get_lid_cut_out_rounding()) * 2,
+           snap_lock_size,
+           clearance_height],
+          anchor=RIGHT+BOTTOM
+        );
+      linear_extrude(clearance_height)
+        cosine_polygon(snap_lock_size, 1.5, 2);
+    }
+  }
+}
+
+module slider_base_snap_lock_clearance_back() {
+  yflip() slider_base_snap_lock_clearance_front();
+}
+
+module slider_base_snap_lock_clearance() {
+  union() {
+    slider_base_snap_lock_clearance_front();
+    slider_base_snap_lock_clearance_back();
+  }
+}
+
 module slider_lid() {
   move([get_x_width_outside()/2 + get_lid_x_margin(), 0, slider_lid_thickness/2]) {
     slider_lid_base();
     slider_rail_base_part(is_lid_part = true);
-    slider_base();
+    difference() {
+      slider_base();
+      slider_base_snap_lock_clearance();
+    }
   }
 }
 
 module slider_rail_box() {
   left(get_x_width_outside()/2 + get_box_x_margin())
-  up(get_bottom_height_outside() + slider_lid_thickness/2)
+  up(get_bottom_height_outside() + slider_lid_thickness/2) {
     difference() {
       slider_rail_base_part(is_lid_part = false);
       slider_base(is_clearance = true);
     }
+    slider_rail_snap_lock();
+  }
 }
