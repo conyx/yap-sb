@@ -1,7 +1,7 @@
-// Main
+// Model detail
 function get_model_detail() = $preview ? model_detail_preview : model_detail_stl;
 
-// Modules
+// Cosine polygon
 module cosine_polygon(y_size, periods, x_scale = 1, is_negative = false) {
   steps = 100 * periods * get_model_detail();
   degrees = periods * 360;
@@ -14,7 +14,16 @@ module cosine_polygon(y_size, periods, x_scale = 1, is_negative = false) {
       [x_size, -y_aplitude],
       [0, -y_aplitude]
   ];
-  polygon(cosine_polygon_points);
+  if (is_negative) {
+    difference() {
+      rect([x_size, y_size], anchor=LEFT);
+      offset(SWO)
+        polygon(cosine_polygon_points);
+    }
+  } else {
+    offset(SWO)
+      polygon(cosine_polygon_points);
+  }
 }
 
 // Compartments
@@ -164,6 +173,7 @@ function get_latch_snap_lock_diameter_male() = get_latch_snap_lock_diameter_fema
 function get_latch_support_z_height() = latch_y_thickness * tan(90 - latch_support_angle);
 
 // Slider lid
+function get_slider_lid_snap_lock_x_scale() = 3;
 function get_slider_lid_grip() = slider_lid_rail_grip / 100 * thickness;
 function get_slider_lid_snap_lock_size() = min(
   0.5 + 0.5 * slider_lid_snap_lock_firmness,

@@ -95,7 +95,23 @@ module slider_base(is_clearance = false) {
 
 module slider_rail_snap_lock_front() {
   if (slider_lid_snap_lock) {
+    grip = get_slider_lid_grip();
+    snap_lock_size = get_slider_lid_snap_lock_size();
     // TODO
+    move([
+      - get_x_width() / 2 + get_lid_cut_out_rounding() - SWO,
+      - get_y_depth() / 2 - grip + snap_lock_size / 2 - SWO,
+      - slider_lid_thickness
+    ]) {
+      yflip()
+      linear_extrude(slider_lid_thickness)
+        cosine_polygon(
+          y_size=snap_lock_size * 0.9,
+          periods=1,
+          x_scale=get_slider_lid_snap_lock_x_scale(),
+          is_negative=true
+      );
+    }
   }
 }
 
@@ -128,7 +144,11 @@ module slider_base_snap_lock_clearance_front() {
           anchor=RIGHT+BOTTOM
         );
       linear_extrude(clearance_height)
-        cosine_polygon(snap_lock_size, 1.5, 2);
+        cosine_polygon(
+          y_size=snap_lock_size,
+          periods=1.5,
+          x_scale=get_slider_lid_snap_lock_x_scale()
+      );
     }
   }
 }
