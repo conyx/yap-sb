@@ -2,11 +2,13 @@
 function get_model_detail() = $preview ? model_detail_preview : model_detail_stl;
 
 // Cosine polygon
+function get_cosine_polygon_x_size(periods, y_size, x_scale) =
+  periods * PI * y_size * x_scale;
 module cosine_polygon(y_size, periods, x_scale = 1, is_negative = false) {
   steps = 100 * periods * get_model_detail();
   degrees = periods * 360;
+  x_size = get_cosine_polygon_x_size(periods, y_size, x_scale);
   y_aplitude = y_size / 2;
-  x_size = periods * 2 * PI * y_aplitude * x_scale;
   cosine_polygon_points = [
       for (i = [0:steps])
         let(x = i * x_size / steps, degree = i * degrees / steps)
@@ -118,8 +120,10 @@ function get_bottom_height_outside() = bottom_height + thickness;
 function get_box_height_inside() = bottom_height + get_lp_height();
 function get_box_height_outside() = get_bottom_height_outside() + get_lp_height();
 function get_lid_height_outside() = lid_type == "slider" ? slider_lid_thickness : lid_height + thickness;
-function get_lip_rounding() = max(MIN_CORNER_RADIUS,
-                   corner_outer_radius - thickness - get_lp_tolerance());
+function get_lip_rounding() = max(
+  MIN_CORNER_RADIUS,
+  corner_outer_radius - thickness - get_lp_tolerance()
+);
 function get_lid_cut_out_rounding() = max(MIN_CORNER_RADIUS, corner_outer_radius - thickness);
 
 // Hinges

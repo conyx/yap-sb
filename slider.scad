@@ -96,21 +96,44 @@ module slider_base(is_clearance = false) {
 module slider_rail_snap_lock_front() {
   if (slider_lid_snap_lock) {
     grip = get_slider_lid_grip();
-    snap_lock_size = get_slider_lid_snap_lock_size();
-    // TODO
+    snap_lock_female_size = get_slider_lid_snap_lock_size();
+    snap_lock_female_period_x_size = get_cosine_polygon_x_size(
+      1,
+      snap_lock_female_size,
+      get_slider_lid_snap_lock_x_scale()
+    );
+    snap_lock_male_size = snap_lock_female_size * 0.9;
+    snap_lock_male_period_x_size = get_cosine_polygon_x_size(
+      1,
+      snap_lock_male_size,
+      get_slider_lid_snap_lock_x_scale()
+    );
     move([
-      - get_x_width() / 2 + get_lid_cut_out_rounding() - SWO,
-      - get_y_depth() / 2 - grip + snap_lock_size / 2 - SWO,
-      - slider_lid_thickness
+      - get_x_width() / 2
+        + get_lid_cut_out_rounding()
+        + snap_lock_female_period_x_size / 2
+        + (snap_lock_female_period_x_size - snap_lock_male_period_x_size) / 2
+        - SWO,
+      - get_y_depth() / 2 - grip + snap_lock_female_size / 2 - SWO,
+      - slider_lid_thickness / 2
     ]) {
       yflip()
       linear_extrude(slider_lid_thickness)
-        cosine_polygon(
-          y_size=snap_lock_size * 0.9,
-          periods=1,
-          x_scale=get_slider_lid_snap_lock_x_scale(),
-          is_negative=true
-      );
+        hull() {
+          back(slider_lid_tolerance)
+            cosine_polygon(
+              y_size=snap_lock_male_size,
+              periods=1,
+              x_scale=get_slider_lid_snap_lock_x_scale(),
+              is_negative=true
+            );
+          cosine_polygon(
+            y_size=snap_lock_male_size,
+            periods=1,
+            x_scale=get_slider_lid_snap_lock_x_scale(),
+            is_negative=true
+          );
+        }
     }
   }
 }
@@ -148,7 +171,7 @@ module slider_base_snap_lock_clearance_front() {
           y_size=snap_lock_size,
           periods=1.5,
           x_scale=get_slider_lid_snap_lock_x_scale()
-      );
+        );
     }
   }
 }
