@@ -232,6 +232,9 @@ slider_lid_notches_number = 8; // 1
 // Width of each individual notch.
 slider_lid_notch_width = 3; // 1
 
+// Height of each notch as a percentage of the lid thickness. Lower values produce shallower notches, higher values cut deeper into the lid.
+slider_lid_notch_height = 30; // [10:1:90]
+
 // Spacing between consecutive notches.
 slider_lid_notches_spacing = 1; // .2
 

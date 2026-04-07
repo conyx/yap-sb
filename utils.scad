@@ -187,6 +187,9 @@ function get_slider_rail_base_cut_x(is_lid_part) =
   get_x_width_outside()
   - max(thickness, corner_outer_radius)
   - (is_lid_part ? 0 : slider_lid_tolerance);
+function get_slider_lid_notches_width() =
+  slider_lid_notches_number * slider_lid_notch_width
+  + (slider_lid_notches_number - 1) * slider_lid_notches_spacing;
 
 // Lid notches
 function get_lid_notch_radius() = thickness / 2;

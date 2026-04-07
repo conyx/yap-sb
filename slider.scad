@@ -186,9 +186,44 @@ module slider_base_snap_lock_clearance() {
   }
 }
 
+module slider_lid_notch() {
+  wedge([get_y_depth() + 2 * SWO,
+       slider_lid_thickness * slider_lid_notch_height / 100,
+       slider_lid_notch_width],
+      center = true,
+      spin = 90,
+      orient = LEFT);
+}
+
+module slider_lid_notches_clearance_base() {
+  step = slider_lid_notch_width + slider_lid_notches_spacing;
+  up(slider_lid_thickness * (1 - slider_lid_notch_height / 100) / 2 + SWO)
+    for (i = [0 : slider_lid_notches_number - 1]) {
+      right((i - (slider_lid_notches_number - 1) / 2) * step)
+        slider_lid_notch();
+    }
+}
+
+module slider_lid_notches_clearance_shape() {
+  // TODO implement shape masking based on slider_lid_notches variable
+}
+
+module slider_lid_notches_clearance() {
+  if (slider_lid_notches != "none") {
+    right(get_x_width()/2 - get_slider_lid_notches_width()/2)
+      intersection() {
+        slider_lid_notches_clearance_base();
+        slider_lid_notches_clearance_shape();
+      }
+  }
+}
+
 module slider_lid() {
   move([get_x_width_outside()/2 + get_lid_x_margin(), 0, slider_lid_thickness/2]) {
-    slider_lid_base();
+    difference() {
+      slider_lid_base();
+      slider_lid_notches_clearance();
+    }
     slider_rail_base_part(is_lid_part = true);
     difference() {
       slider_base();
