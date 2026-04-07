@@ -112,9 +112,8 @@ module slider_rail_snap_lock_front() {
       - get_x_width() / 2
         + get_lid_cut_out_rounding()
         + snap_lock_female_period_x_size / 2
-        + (snap_lock_female_period_x_size - snap_lock_male_period_x_size) / 2
-        - SWO,
-      - get_y_depth() / 2 - grip + snap_lock_female_size / 2 - SWO,
+        + (snap_lock_female_period_x_size - snap_lock_male_period_x_size) / 2,
+      - get_y_depth() / 2 - grip + snap_lock_female_size / 2,
       - slider_lid_thickness / 2
     ]) {
       yflip()
