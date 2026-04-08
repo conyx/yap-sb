@@ -198,10 +198,8 @@ module slider_lid_notch() {
 module slider_lid_notches_clearance_base() {
   step = slider_lid_notch_width + slider_lid_notches_spacing;
   up(slider_lid_thickness * (1 - slider_lid_notch_height / 100) / 2 + SWO)
-    for (i = [0 : slider_lid_notches_number - 1]) {
-      right((i - (slider_lid_notches_number - 1) / 2) * step)
-        slider_lid_notch();
-    }
+    xcopies(spacing = step, n = slider_lid_notches_number)
+      slider_lid_notch();
 }
 
 module slider_lid_notches_clearance_shape() {
