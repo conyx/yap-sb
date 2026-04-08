@@ -232,11 +232,14 @@ slider_lid_notches_number = 8; // 1
 // Width of each individual notch.
 slider_lid_notch_width = 3; // 1
 
+// Spacing between consecutive notches.
+slider_lid_notches_spacing = 1; // .2
+
 // Height of each notch as a percentage of the lid thickness. Lower values produce shallower notches, higher values cut deeper into the lid.
 slider_lid_notch_height = 30; // [10:1:90]
 
-// Spacing between consecutive notches.
-slider_lid_notches_spacing = 1; // .2
+// Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle or heart.
+slider_lid_notches_shape_flip = false;
 
 // Whether to add snap-lock bumps that hold the lid closed
 slider_lid_snap_lock = true;

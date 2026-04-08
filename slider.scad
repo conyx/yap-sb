@@ -206,7 +206,8 @@ module slider_lid_notches_clearance_base() {
 
 module slider_lid_notches_clearance_shape() {
   w = get_slider_lid_notches_width();
-  linear_extrude(2 * slider_lid_thickness, center = true) {
+  linear_extrude(2 * slider_lid_thickness, center = true)
+  rotate(slider_lid_notches_shape_flip ? 180 : 0) {
     if (slider_lid_notches == "full") {
       square([w, get_y_depth() + 2 * SWO], center = true);
     } else if (slider_lid_notches == "circle") {
