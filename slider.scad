@@ -205,7 +205,38 @@ module slider_lid_notches_clearance_base() {
 }
 
 module slider_lid_notches_clearance_shape() {
-  // TODO implement shape masking based on slider_lid_notches variable
+  w = get_slider_lid_notches_width();
+  linear_extrude(2 * slider_lid_thickness, center = true) {
+    if (slider_lid_notches == "full") {
+      square([w, get_y_depth() + 2 * SWO], center = true);
+    } else if (slider_lid_notches == "circle") {
+      circle(d = w);
+    } else if (slider_lid_notches == "triangle") {
+      ngon_side = (2 * w) / sqrt(3);
+      ngon_r = ngon_side / (2 * sin(60));
+      ngon_rounding = w/12;
+      left(ngon_r * (1 + cos(120)) / 2 - ngon_rounding / 2)
+        offset(ngon_rounding / 2)
+          regular_ngon(n = 3, side = ngon_side, rounding = ngon_rounding);
+    } else if (slider_lid_notches == "square") {
+      rect([w, w], rounding = w/10);
+    } else if (slider_lid_notches == "hexagon") {
+      hexagon(r = w / (2 * sin(60)), rounding = w/12, spin = 90);
+    } else if (slider_lid_notches == "heart") {
+      r = w / 4;
+      tiny_r = w / 40;
+      union() {
+        hull() {
+          translate([-r, r]) circle(r = r);
+          translate([w/2 - tiny_r, 0]) circle(r = tiny_r);
+        }
+        hull() {
+          translate([-r, -r]) circle(r = r);
+          translate([w/2 - tiny_r, 0]) circle(r = tiny_r);
+        }
+      }
+    }
+  }
 }
 
 module slider_lid_notches_clearance() {
