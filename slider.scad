@@ -214,9 +214,8 @@ module slider_lid_notches_clearance_shape() {
       circle(d = w);
     } else if (slider_lid_notches == "triangle") {
       ngon_side = (2 * w) / sqrt(3);
-      ngon_r = ngon_side / (2 * sin(60));
       ngon_rounding = w/12;
-      left(ngon_r * (1 + cos(120)) / 2 - ngon_rounding / 2)
+      left(w / 6 - ngon_rounding / 2)
         offset(ngon_rounding / 2)
           regular_ngon(n = 3, side = ngon_side, rounding = ngon_rounding);
     } else if (slider_lid_notches == "square") {
