@@ -59,7 +59,7 @@ separators_inside_lid = false;
 /* [Rounding] */
 
 // Box/lid corner outer radius (0 = sharp outer corner).
-corner_outer_radius = 4; // .5
+corner_outer_radius = 5; // .5
 
 // Box/lid corner inner radius (0 = sharp inner corner).
 corner_inner_radius = 2; // .5
@@ -218,7 +218,7 @@ latch_tolerance = 0.1; // [0:0.01:0.5]
 /* [Slider lid] */
 
 // The thickness of the slider lid. Adds overall height.
-slider_lid_thickness = 3;
+slider_lid_thickness = 3; // .1
 
 // How deep the slider lid sits inside the box rail, as a percentage of wall thickness. Higher values make the lid more secure but the box harder to print.
 slider_lid_rail_grip = 60; // [20:1:80]
@@ -227,7 +227,7 @@ slider_lid_rail_grip = 60; // [20:1:80]
 slider_lid_notches = "circle"; // [none: None, full: Full, circle: Circle, triangle: Triangle, square: Square, hexagon: Hexagon, heart: Heart]
 
 // Number of notches cut into the slider lid.
-slider_lid_notches_number = 8; // 1
+slider_lid_notches_number = 6; // 1
 
 // Width of each individual notch.
 slider_lid_notch_width = 3; // 1
