@@ -43,7 +43,7 @@ bottom_height = 25; // .5
 lid_height = 10; // .5
 
 // Wall thickness. This adds to the outside dimensions of the box.
-thickness = 3; // .1
+thickness = 2.4; // .1
 
 /* [Separators] */
 
@@ -218,7 +218,7 @@ latch_tolerance = 0.1; // [0:0.01:0.5]
 /* [Slider lid] */
 
 // The thickness of the slider lid. Adds overall height.
-slider_lid_thickness = 3; // .1
+slider_lid_thickness = 2.4; // .1
 
 // How deep the slider lid sits inside the box rail, as a percentage of wall thickness. Higher values make the lid more secure but the box harder to print.
 slider_lid_rail_grip = 60; // [20:1:80]
@@ -236,7 +236,7 @@ slider_lid_notch_width = 3; // 1
 slider_lid_notches_spacing = 1; // .2
 
 // Height of each notch as a percentage of the lid thickness. Lower values produce shallower notches, higher values cut deeper into the lid.
-slider_lid_notch_height = 30; // [10:1:90]
+slider_lid_notch_height = 40; // [10:1:90]
 
 // Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle or heart.
 slider_lid_notches_shape_flip = false;
