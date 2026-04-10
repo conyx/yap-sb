@@ -224,7 +224,7 @@ slider_lid_thickness = 2.4; // .1
 slider_lid_rail_grip = 60; // [20:1:80]
 
 // Shape of the notch pattern on top of the slider lid. "None" disables notches. "Full" does not form any shape and uses the full Y depth of the lid.
-slider_lid_notches = "circle"; // [none: None, full: Full, circle: Circle, triangle: Triangle, square: Square, hexagon: Hexagon, heart: Heart]
+slider_lid_notches = "circle"; // [none: None, full: Full, circle: Circle, triangle: Triangle, square: Square, hexagon: Hexagon, teardrop: Teardrop, cross: Cross, heart: Heart]
 
 // Number of notches cut into the slider lid.
 slider_lid_notches_number = 6; // 1

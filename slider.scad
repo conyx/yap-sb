@@ -220,6 +220,19 @@ module slider_lid_notches_clearance_shape() {
       rect([w, w], rounding = w/10);
     } else if (slider_lid_notches == "hexagon") {
       hexagon(r = w / (2 * sin(60)), rounding = w/12, spin = 90);
+    } else if (slider_lid_notches == "teardrop") {
+      td_ang = 30;
+      // tip reaches r/sin(ang) = 2r, total span = 3r = w
+      td_r = w / 3;
+      // center bounding box: tip extends r further than circle
+      right(td_r / 2)
+        teardrop2d(r = td_r, ang = td_ang, spin = 90);
+    } else if (slider_lid_notches == "cross") {
+      arm = w / 3;
+      union() {
+        rect([w, arm], rounding = arm/4);
+        rect([arm, w], rounding = arm/4);
+      }
     } else if (slider_lid_notches == "heart") {
       r = w / 4;
       tiny_r = w / 40;
