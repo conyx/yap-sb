@@ -177,7 +177,7 @@ function get_latch_snap_lock_diameter_male() = get_latch_snap_lock_diameter_fema
 function get_latch_support_z_height() = latch_y_thickness * tan(90 - latch_support_angle);
 
 // Slider lid
-function get_slider_lid_snap_lock_x_scale() = 3;
+function get_slider_lid_snap_lock_x_scale() = 2;
 function get_slider_lid_grip() = slider_lid_rail_grip / 100 * thickness;
 function get_slider_lid_snap_lock_size() = min(
   0.3 + 0.3 * slider_lid_snap_lock_firmness,

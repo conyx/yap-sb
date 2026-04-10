@@ -76,7 +76,7 @@ lip_height = 5; // .5
 lip_thickness = 0.8; // .1
 
 // Extra clearance added to lip dimensions. Increase if the lid fits too tightly. Decrease for more firm friction fit effect.
-lip_tolerance = 0.15; // [0:0.01:0.5]
+lip_tolerance = 0.1; // [0:0.01:0.5]
 
 /* [Magnets] */
 
@@ -248,7 +248,7 @@ slider_lid_snap_lock = true;
 slider_lid_snap_lock_firmness = 0.5; // [0:0.05:1]
 
 // Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
-slider_lid_tolerance = 0.15; // [0:0.01:0.5]
+slider_lid_tolerance = 0.1; // [0:0.01:0.5]
 
 /* [Connection groove / bump] */
 
