@@ -76,7 +76,7 @@ lip_height = 5; // .5
 lip_thickness = 0.8; // .1
 
 // Extra clearance added to lip dimensions. Increase if the lid fits too tightly. Decrease for more firm friction fit effect.
-lip_tolerance = 0.1; // [0:0.01:0.5]
+lip_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Magnets] */
 
@@ -102,7 +102,7 @@ magnet_generate_closure = false;
 magnet_closure_height = 0.45; // [0.1:0.05:1]
 
 // Extra clearance added to magnet hole dimensions. Increase if magnets don't fit.
-magnet_tolerance = 0.15; // [0:0.01:0.5]
+magnet_tolerance = 0.15; // [0:0.01:0.3]
 
 /* [Hinges] */
 
@@ -167,7 +167,7 @@ hinge_nut_width = 1.8; // .1
 hinge_nut_size = 4; // .1
 
 // Extra clearance added to screw head and nut recesses. Increase if hardware doesn't fit.
-hinge_screw_tolerance = 0.1; // [0:0.01:0.5]
+hinge_screw_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Hinges / self-tapping screw] */
 
@@ -213,7 +213,7 @@ latch_hinge_arm_angle = 45; // [30:1:90]
 latch_hinge_gap = 0.15; // .05
 
 // Extra clearance added to latch dovetail dimensions. Increase if the latch is too tight.
-latch_tolerance = 0.1; // [0:0.01:0.5]
+latch_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Slider lid] */
 
@@ -248,7 +248,7 @@ slider_lid_snap_lock = true;
 slider_lid_snap_lock_firmness = 0.5; // [0:0.05:1]
 
 // Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
-slider_lid_tolerance = 0.1; // [0:0.01:0.5]
+slider_lid_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Connection groove / bump] */
 
