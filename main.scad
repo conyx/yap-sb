@@ -238,6 +238,9 @@ slider_lid_notches_spacing = 1; // .2
 // Height of each notch as a percentage of the lid thickness. Lower values produce shallower notches, higher values cut deeper into the lid.
 slider_lid_notch_height = 40; // [10:1:90]
 
+// Offset of the notch pattern from the right edge of the lid. Increase to move notches further left.
+slider_lid_notches_right_offset = 0; // 1
+
 // Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle or heart.
 slider_lid_notches_shape_flip = false;
 

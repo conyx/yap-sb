@@ -252,7 +252,7 @@ module slider_lid_notches_clearance_shape() {
 
 module slider_lid_notches_clearance() {
   if (slider_lid_notches != "none") {
-    right(get_x_width()/2 - get_slider_lid_notches_width()/2)
+    right(get_x_width()/2 - get_slider_lid_notches_width()/2 - slider_lid_notches_right_offset)
       intersection() {
         slider_lid_notches_clearance_base();
         slider_lid_notches_clearance_shape();
