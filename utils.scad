@@ -1,3 +1,6 @@
+// XOR
+function xor(a, b) = a != b;
+
 // Model detail
 function get_model_detail() = $preview ? model_detail_preview : model_detail_stl;
 
