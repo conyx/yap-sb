@@ -3,6 +3,19 @@
 # libraries (if installed locally)
 /BOSL2
 
+# IDEs and editors
+/.idea
+*.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+!*.code-workspace
+.claude/
+.mcp.json
+
 # System Files
 .DS_Store
 Thumbs.db
