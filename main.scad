@@ -63,7 +63,7 @@ corner_outer_radius = 5; // .5
 // Box/lid corner inner radius (0 = sharp inner corner).
 corner_inner_radius = 2; // .5
 
-// Compartment bottom corner radius (0 = sharp inner corner).
+// Compartment bottom corner radius (0 = sharp inner corner). WARNING: this could be slow.
 compartment_bottom_radius = 0; // .5
 
 /* [Lip] */
@@ -240,7 +240,7 @@ slider_lid_notch_height = 40; // [10:1:90]
 // Offset of the notch pattern from the right edge of the lid. Increase to move notches further left.
 slider_lid_notches_right_offset = 0; // 1
 
-// Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle or heart.
+// Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle, teardrop or heart.
 slider_lid_notches_shape_flip = false;
 
 // Whether to add snap-lock bumps that hold the lid closed
