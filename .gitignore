@@ -22,4 +22,6 @@ Thumbs.db
 
 # generated
 storagebox.scad
+main.json
+storagebox.json
 *.stl
