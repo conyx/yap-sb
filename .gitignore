@@ -21,7 +21,7 @@
 Thumbs.db
 
 # generated
-storagebox.scad
 main.json
-storagebox.json
+boxee.scad
+boxee.json
 *.stl
