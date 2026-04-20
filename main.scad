@@ -29,7 +29,7 @@ model_detail_stl = 0.9; // [0:0.01:1]
 // Generate a summary plate with dimensions and accessory info (only in preview mode).
 generate_summary_plate = true;
 
-// Compartment dimensions as text. Format per row: "DEPTH, WIDTH, WIDTH, ...". Rows are separated by semicolon ";". The first number of each row is its (Y) DEPTH, followed by (X) WIDTHS of compartments in that row. (TIP: Use "100, 100" for a single full-box compartment.)
+// Compartment dimensions as text. Format per row: "DEPTH, WIDTH, WIDTH, ...". Rows are separated by semicolon ";". The first number of each row is its DEPTH (Y), followed by WIDTHs (X) of compartments in that row. (TIP: Use "100, 100" for a single full-box compartment.)
 compartments_dimensions = "50, 20, 55, 55, 20; 25, 37.5, 37.5, 37.5, 37.5";
 
 // If true, rows are generated along Y axis instead of X axis.
