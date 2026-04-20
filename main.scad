@@ -18,7 +18,7 @@ include <summary.scad>
 /* [Main] */
 
 // How the box and lid connect
-lid_type = "hinges_latches"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, latches: Latches, lip_latches: Lip and latches, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches, slider: Slider]
+lid_type = "slider"; // [no_lid: No lid, lip: Lip, magnets: Magnets, lip_magnets: Lip and magnets, latches: Latches, lip_latches: Lip and latches, hinges: Hinges, hinges_magnets: Hinges and magnets, hinges_latches: Hinges and latches, slider: Slider]
 
 // Model detail in preview mode. Increase for better but slower results in preview mode.
 model_detail_preview = 0.4; // [0:0.01:1]
