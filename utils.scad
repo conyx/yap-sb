@@ -33,42 +33,26 @@ module cosine_polygon(y_size, periods, x_scale = 1, is_negative = false) {
 
 // Compartments
 function get_compartments_grid() = parse_compartments_grid(compartments_dimensions);
-function parse_compartments_grid(compartments_flat) =
+function parse_compartments_grid(spec) =
   let(
-    a1 = assert(len(compartments_flat) >= 2,
-           str("compartments_dimensions must have at least 2 values (one depth and one width). ",
-               "Current length: ", len(compartments_flat))),
-    a2 = assert(len([for (v = compartments_flat) if (v < 0) v]) == 0,
-           str("compartments_dimensions must not contain negative values. ",
-               "Found: ", [for (v = compartments_flat) if (v < 0) v])),
-    a3 = assert(compartments_flat[0] != 0 &&
-                 compartments_flat[1] != 0 &&
-                 compartments_flat[len(compartments_flat)-1] != 0 &&
-                 compartments_flat[len(compartments_flat)-2] != 0,
-           str("compartments_dimensions must not have zeros at 1st, 2nd, penultimate or last positions. ",
-               "Values: ", compartments_flat)),
-    zero_pos = [for (i = [0:len(compartments_flat)-1]) if (compartments_flat[i] == 0) i],
-    a4 = assert(len(zero_pos) < 2
-             ? true
-             : len([for (i = [0:len(zero_pos)-2])
-                    if (zero_pos[i+1] - zero_pos[i] < 3) i]) == 0,
-           str("Between two zeros in compartments_dimensions there must be 2 or more non-zero values. ",
-               "Zero positions: ", zero_pos)),
-
-    f = (len(compartments_flat) > 0 && compartments_flat[len(compartments_flat)-1] != 0)
-        ? concat(compartments_flat, [0])
-        : compartments_flat,
-    sentinel_indices = [for (i = [0:len(f)-1]) if (f[i] == 0) i]
+    rows_raw = str_split(spec, ";"),
+    rows = [for (r = rows_raw)
+              [for (tok = str_split(r, ","))
+                 let(c = str_strip(tok, " \t"))
+                 if (c != "") parse_num(c)]],
+    all_values = [for (row = rows) for (v = row) v],
+    bad_values = [for (v = all_values) if (!is_num(v) || v != v || v <= 0) v],
+    a1 = assert(len([for (row = rows) if (len(row) == 0) row]) == 0,
+           str("compartments_dimensions must not have empty rows (check for leading, trailing or double ';'). ",
+               "Input: ", spec)),
+    a2 = assert(len(bad_values) == 0,
+           str("compartments_dimensions must only contain positive, parseable numbers. ",
+               "Input: ", spec)),
+    a3 = assert(len([for (row = rows) if (len(row) < 2) row]) == 0,
+           str("Each row must have at least 2 values (depth and at least one width). ",
+               "Rows: ", rows))
   )
-  [for (i = [0:len(sentinel_indices)-1])
-    let(
-      start = i == 0 ? 0 : sentinel_indices[i-1] + 1,
-      end = sentinel_indices[i] - 1,
-      depth = f[start],
-      widths = [for (j = [start+1:end]) f[j]]
-    )
-    [depth, widths]
-  ];
+  [for (row = rows) [row[0], [for (i = [1:len(row)-1]) row[i]]]];
 
 // Derived flags
 function get_generate_lid() = lid_type != "no_lid";
