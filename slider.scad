@@ -93,6 +93,15 @@ module slider_base(is_clearance = false) {
     path_sweep2d(is_clearance ? profile_clearance : profile, path, closed = true);
 }
 
+module slider_rail_snap_lock_front_base_2d(snap_lock_male_size) {
+  cosine_polygon(
+    y_size=snap_lock_male_size,
+    periods=1,
+    x_scale=get_slider_lid_snap_lock_x_scale(),
+    is_negative=true
+  );
+}
+
 module slider_rail_snap_lock_front() {
   if (slider_lid_snap_lock) {
     grip = get_slider_lid_grip();
@@ -120,18 +129,8 @@ module slider_rail_snap_lock_front() {
       linear_extrude(slider_lid_thickness)
         hull() {
           back(slider_lid_tolerance)
-            cosine_polygon(
-              y_size=snap_lock_male_size,
-              periods=1,
-              x_scale=get_slider_lid_snap_lock_x_scale(),
-              is_negative=true
-            );
-          cosine_polygon(
-            y_size=snap_lock_male_size,
-            periods=1,
-            x_scale=get_slider_lid_snap_lock_x_scale(),
-            is_negative=true
-          );
+            slider_rail_snap_lock_front_base_2d(snap_lock_male_size);
+          slider_rail_snap_lock_front_base_2d(snap_lock_male_size);
         }
     }
   }

@@ -66,6 +66,44 @@ corner_inner_radius = 2; // .5
 // Compartment bottom corner radius (0 = sharp inner corner). WARNING: this could be slow.
 compartment_bottom_radius = 0; // .5
 
+/* [Slider lid] */
+
+// The thickness of the slider lid. Adds overall height.
+slider_lid_thickness = 2.4; // .1
+
+// How deep the slider lid sits inside the box rail, as a percentage of wall thickness. Higher values make the lid more secure but the box harder to print.
+slider_lid_rail_grip = 60; // [20:1:80]
+
+// Shape of the notch pattern on top of the slider lid. "None" disables notches. "Full" does not form any shape and uses the full Y depth of the lid.
+slider_lid_notches = "circle"; // [none: None, full: Full, circle: Circle, triangle: Triangle, square: Square, hexagon: Hexagon, teardrop: Teardrop, cross: Cross, heart: Heart]
+
+// Number of notches cut into the slider lid.
+slider_lid_notches_number = 6; // 1
+
+// Width of each individual notch.
+slider_lid_notch_width = 3; // 1
+
+// Spacing between consecutive notches.
+slider_lid_notches_spacing = 1; // .2
+
+// Height of each notch as a percentage of the lid thickness. Lower values produce shallower notches, higher values cut deeper into the lid.
+slider_lid_notch_height = 40; // [10:1:90]
+
+// Offset of the notch pattern from the right edge of the lid. Increase to move notches further left.
+slider_lid_notches_right_offset = 0; // 1
+
+// Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle, teardrop or heart.
+slider_lid_notches_shape_flip = false;
+
+// Whether to add snap-lock bumps that hold the lid closed
+slider_lid_snap_lock = true;
+
+// How firmly the snap lock holds (0 = loosest, 1 = firmest). Higher values produce larger bumps.
+slider_lid_snap_lock_firmness = 0.5; // [0:0.05:1]
+
+// Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
+slider_lid_tolerance = 0.1; // [0:0.01:0.3]
+
 /* [Lip] */
 
 // Height of lip above box top, used for the friction fit.
@@ -213,44 +251,6 @@ latch_hinge_gap = 0.15; // .05
 
 // Extra clearance added to latch dovetail dimensions. Increase if the latch is too tight.
 latch_tolerance = 0.1; // [0:0.01:0.3]
-
-/* [Slider lid] */
-
-// The thickness of the slider lid. Adds overall height.
-slider_lid_thickness = 2.4; // .1
-
-// How deep the slider lid sits inside the box rail, as a percentage of wall thickness. Higher values make the lid more secure but the box harder to print.
-slider_lid_rail_grip = 60; // [20:1:80]
-
-// Shape of the notch pattern on top of the slider lid. "None" disables notches. "Full" does not form any shape and uses the full Y depth of the lid.
-slider_lid_notches = "circle"; // [none: None, full: Full, circle: Circle, triangle: Triangle, square: Square, hexagon: Hexagon, teardrop: Teardrop, cross: Cross, heart: Heart]
-
-// Number of notches cut into the slider lid.
-slider_lid_notches_number = 6; // 1
-
-// Width of each individual notch.
-slider_lid_notch_width = 3; // 1
-
-// Spacing between consecutive notches.
-slider_lid_notches_spacing = 1; // .2
-
-// Height of each notch as a percentage of the lid thickness. Lower values produce shallower notches, higher values cut deeper into the lid.
-slider_lid_notch_height = 40; // [10:1:90]
-
-// Offset of the notch pattern from the right edge of the lid. Increase to move notches further left.
-slider_lid_notches_right_offset = 0; // 1
-
-// Flip the notch shape along the X axis. Useful for reversing the direction of asymmetric shapes like triangle, teardrop or heart.
-slider_lid_notches_shape_flip = false;
-
-// Whether to add snap-lock bumps that hold the lid closed
-slider_lid_snap_lock = true;
-
-// How firmly the snap lock holds (0 = loosest, 1 = firmest). Higher values produce larger bumps.
-slider_lid_snap_lock_firmness = 0.5; // [0:0.05:1]
-
-// Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
-slider_lid_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Connection groove / bump] */
 
