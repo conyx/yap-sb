@@ -226,13 +226,13 @@ hinge_self_tap_screw_gap = 2; // .5
 latches_number = 1; // [1:1:10]
 
 // Width of each latch (X axis)
-latch_x_width = 20;
+latch_x_width = 20; // .1
 
 // Height of each latch (Z axis)
-latch_z_height = 15;
+latch_z_height = 15; // .1
 
 // Thickness of each latch (Y axis). Also determines the hinge knuckle diameter.
-latch_y_thickness = 6; // [3.5:0.5:10]
+latch_y_thickness = 6; // [3.5:0.1:10]
 
 // Whether to add snap-lock bumps that hold the latch closed
 latch_snap_lock = true;
