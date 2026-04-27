@@ -43,10 +43,10 @@ module lid() {
               }
 
               // Cut out full lid width and depth for lip clearance
-              up((thickness + (separators_inside_lid ? (lid_height - get_lp_height()) : 0) + SWO) / 2)
+              up((thickness + (separators_inside_lid ? (lid_height - get_lp_height()) : 0)) / 2 + SWO)
                 cuboid([get_x_width_outside() - thickness*2,
                         get_y_depth_outside() - thickness*2,
-                        (separators_inside_lid ? get_lp_height() : lid_height) + SWO],
+                        (separators_inside_lid ? get_lp_height() : lid_height) + 2*SWO],
                        rounding = get_lid_cut_out_rounding(),
                        edges = "Z");
 
