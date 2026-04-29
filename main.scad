@@ -130,7 +130,7 @@ magnet_height = 3;  // .5
 magnet_holder_diameter = 5;  // .5
 
 // Extra height for (super) glue to secure magnets in their holes
-magnet_glue_height = 1; // .5
+magnet_glue_height = 0.5; // [0.1:0.1:3]
 
 // Whether to generate a magnet closure that fills the space above the magnet. IMPORTANT: You have to pause printing at a specific layer to insert magnets. See console output or the summary plate for instructions.
 magnet_generate_closure = false;
