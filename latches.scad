@@ -72,7 +72,7 @@ module latch_snap_lock(is_male) {
 module latch_snap_lock_right(is_male) {
   diameter = is_male ? get_latch_snap_lock_diameter_male() : get_latch_snap_lock_diameter_female();
   z_offset = get_latch_notch_z_height() + get_latch_snap_lock_diameter_female() / 2;
-  x_offset = z_offset / get_latch_slope() + (diameter / 2) * (0.75 - 0.5 * latch_snap_lock_firmness);
+  x_offset = z_offset / get_latch_slope() + (diameter / 2) * (0.85 - 0.2 * latch_snap_lock_firmness);
   move([mean([latch_x_width, get_latch_x_width_back()]) / 2 - x_offset,
         0,
         latch_z_height - z_offset])
