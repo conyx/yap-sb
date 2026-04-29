@@ -13,7 +13,7 @@ module hinge(is_box_hinge) {
                   pin_diam = get_hinge_hole_diameter(),
                   screw_head = "flat",
                   tap_depth = hinge_self_tap_screw_tap_depth,
-                  in_place = hinge_join_type == "print_in_place",
+                  in_place = hinge_join_type == "print_in_place" ? 35 : false,
                   gap = hinge_segments_gap,
                   inner = !is_box_hinge,
                   arm_angle = hinge_arm_angle,
