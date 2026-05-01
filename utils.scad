@@ -167,9 +167,9 @@ function get_latch_support_z_height() = latch_y_thickness * tan(90 - latch_suppo
 function get_slider_lid_snap_lock_x_scale() = 3;
 function get_slider_lid_grip() = slider_lid_rail_grip / 100 * thickness;
 function get_slider_lid_snap_lock_size() = min(
-  0.25
-    + 0.05 * get_y_depth() / 80
-    + 0.2 * slider_lid_snap_lock_firmness,
+  0.15
+    + 0.1 * get_y_depth() / 100
+    + 0.3 * slider_lid_snap_lock_firmness,
   get_slider_lid_grip()
 );
 function get_slider_rail_base_cut_x(is_lid_part) =
