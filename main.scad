@@ -52,7 +52,7 @@ separator_thickness = 1.0; // .1
 // Lowers separators from the top by this amount, creating shared open space above the compartments (0 = separators reach full height).
 separators_z_offset = 0; // .5
 
-// Whether corresponding separators should also be generated inside the lid.
+// Whether corresponding separators should also be generated inside the lid. This has no effect if slider lid is in use.
 separators_inside_lid = false;
 
 /* [Rounding] */
