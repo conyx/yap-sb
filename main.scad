@@ -139,7 +139,7 @@ magnet_generate_closure = false;
 magnet_closure_height = 0.45; // [0.1:0.05:1]
 
 // Extra clearance added to magnet hole dimensions. Increase if magnets don't fit.
-magnet_tolerance = 0.15; // [0:0.01:0.3]
+magnet_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Hinges] */
 
