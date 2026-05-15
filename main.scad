@@ -101,7 +101,7 @@ slider_lid_snap_lock = true;
 // How firmly the snap lock holds (0 = loosest, 1 = firmest). Higher values produce larger bumps.
 slider_lid_snap_lock_firmness = 0.5; // [0:0.05:1]
 
-// Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly.
+// Extra clearance added to slider rail dimensions. Increase if the lid slides too tightly. WARNING: snap lock is optimized to default tolerance 0.1. If you adjust tolerance you might need to adjust "slider_lid_snap_lock_firmness" too.
 slider_lid_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Lip] */
@@ -249,7 +249,7 @@ latch_hinge_arm_angle = 45; // [30:1:90]
 // Gap between latch hinge segments
 latch_hinge_gap = 0.15; // .05
 
-// Extra clearance added to latch dovetail dimensions. Increase if the latch is too tight.
+// Extra clearance added to latch dovetail dimensions. Increase if the latch is too tight. WARNING: snap lock is optimized to default tolerance 0.1. If you adjust tolerance you might need to adjust "latch_snap_lock_firmness" too.
 latch_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Connection groove / bump] */
