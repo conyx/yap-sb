@@ -119,14 +119,14 @@ function get_hinge_length() = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_length + hinge_self_tap_screw_gap
   : hinge_join_type == "screw_nut"
     ? hinge_screw_length + hinge_screw_head_width + 4*hinge_hardware_tolerance
-    : hinge_join_type == "print_in_place"
-      ? hinge_in_place_length
+    : hinge_join_type == "snap_fit"
+      ? hinge_snap_fit_length
       : hinge_pin_length;
 function get_hinge_hole_diameter() = hinge_join_type == "screw_self_tap"
   ? hinge_self_tap_screw_type
   : hinge_join_type == "screw_nut"
     ? hinge_screw_diameter
-    : hinge_join_type == "print_in_place"
+    : hinge_join_type == "snap_fit"
       ? get_in_place_knuckle_hinge_pin_diam(hinge_knuckle_diameter)
       : hinge_pin_diameter;
 function get_in_place_knuckle_hinge_pin_diam(knuckle_diam) =

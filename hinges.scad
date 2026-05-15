@@ -13,7 +13,7 @@ module hinge(is_box_hinge) {
                   pin_diam = get_hinge_hole_diameter(),
                   screw_head = "flat",
                   tap_depth = hinge_self_tap_screw_tap_depth,
-                  in_place = hinge_join_type == "print_in_place",
+                  in_place = hinge_join_type == "snap_fit",
                   gap = hinge_segments_gap,
                   inner = !is_box_hinge,
                   arm_angle = hinge_arm_angle,
@@ -21,7 +21,7 @@ module hinge(is_box_hinge) {
                   seg_ratio = hinge_segments_ratio,
                   orient = BACK,
                   spin = 180,
-                  $slop = hinge_join_type != "print_in_place" ? hinge_hardware_tolerance : 0);
+                  $slop = hinge_join_type != "snap_fit" ? hinge_hardware_tolerance : 0);
 
     // Screw head/nut hole in first segment
     if (hinge_join_type == "screw_nut") {
@@ -56,9 +56,9 @@ module hinges() {
                "Total hinge length: ", hinges_number * get_hinge_length(), "mm, ",
                "box width: ", get_x_width_outside(), "mm"));
 
-    if (hinge_join_type == "print_in_place") {
+    if (hinge_join_type == "snap_fit") {
       assert(hinge_segments >= 3,
-             str("Print-in-place hinge requires at least 3 segments. ",
+             str("Snap-fit hinge requires at least 3 segments. ",
                  "Current segments: ", hinge_segments));
     }
 

@@ -32,7 +32,7 @@ module summary() {
     : [];
 
   // Column 3: Hinges
-  col3 = get_generate_hinges() && hinge_join_type != "print_in_place"
+  col3 = get_generate_hinges() && hinge_join_type != "snap_fit"
     ? concat(
         ["Hinges:"],
         hinge_join_type == "screw_nut"

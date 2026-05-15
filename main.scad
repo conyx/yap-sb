@@ -143,8 +143,8 @@ magnet_tolerance = 0.1; // [0:0.01:0.3]
 
 /* [Hinges] */
 
-// How hinge segments should be joined.  "Print-in-place" prints the pin directly as part of the hinge (no hardware needed), "Simple pin" creates a simple hole with a specific diameter, "Screw with nut" additionally creates holes for the screw head and nut, "Self-tapping screw" creates a hole for the screw head and adjusts the last segment for self-tapping.
-hinge_join_type = "print_in_place"; // [print_in_place: Print-in-place, pin: Simple pin, screw_nut: Screw with nut, screw_self_tap: Self-tapping screw]
+// How hinge segments should be joined.  "Snap-fit" hinges assemble after printing without hardware (parts snap together), "Simple pin" creates a simple hole with a specific diameter, "Screw with nut" additionally creates holes for the screw head and nut, "Self-tapping screw" creates a hole for the screw head and adjusts the last segment for self-tapping.
+hinge_join_type = "snap_fit"; // [snap_fit: Snap-fit, pin: Simple pin, screw_nut: Screw with nut, screw_self_tap: Self-tapping screw]
 
 // # of hinges
 hinges_number = 2; // [1:1:10]
@@ -170,13 +170,13 @@ hinge_mount_gap = 0.1; // .05
 // Gap between hinge segments
 hinge_segments_gap = 0.15; // .05
 
-// Extra clearance added to hinge hardware fit (pin holes, screw head and nut recesses). Increase if hardware doesn't fit. Has no effect for print-in-place hinges.
+// Extra clearance added to hinge hardware fit (pin holes, screw head and nut recesses). Increase if hardware doesn't fit. Has no effect for snap-fit hinges.
 hinge_hardware_tolerance = 0.1; // [0:0.01:0.3]
 
-/* [Hinges / print-in-place] */
+/* [Hinges / snap-fit] */
 
-// Length of each print-in-place hinge
-hinge_in_place_length = 25;
+// Length of each snap-fit hinge
+hinge_snap_fit_length = 25;
 
 /* [Hinges / simple pin] */
 
